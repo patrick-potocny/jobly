@@ -1,0 +1,58 @@
+.container {
+  max-width: 75em;
+  margin: 0 auto;
+}
+
+.logo {
+  margin: 0 auto;
+  width: 13em;
+  height: auto;
+}
+
+.main {
+  display: flex;
+  margin-top: 1em;
+}
+
+.signInDiv {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutAppDiv {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 69em) {
+  .main {
+    flex-direction: column-reverse;
+  }
+
+  .signInDiv {
+    width: 100%;
+  }
+  
+  .aboutAppDiv {
+    padding-inline: 2em;
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 38em) {
+  .aboutAppDiv, .logo {
+    font-size: 0.45rem;
+    font-size: clamp(0.45rem, -0.1rem + 2.8947368421052633vw, 1rem);
+  }
+
+  .signInDiv {
+    margin-top: 2em;
+    font-size: 0.6em;
+    font-size: clamp(0.6rem, 0.2rem + 2.1052631578947367vw, 1rem);
+  }
+}

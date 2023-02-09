@@ -1,0 +1,11 @@
+@mixin btn-hover {
+  transition: ease-out 0.2s;
+  &:hover {
+    @content;
+    cursor: pointer;
+  }
+
+  &:active {  
+    scale: .9;
+  }
+}

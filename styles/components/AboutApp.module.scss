@@ -1,0 +1,55 @@
+@import '@/styles/colors';
+@import '@/styles/mixins';
+
+.aboutAppDiv {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  color: $clr-text;
+
+  h1 {
+    font-size: 4.5em;
+    font-weight: 900;
+    line-height: 1.2;
+    background: linear-gradient(264.74deg, #3A0CA3 38.24%, #03045E 89.62%);
+    background-clip: text;
+    color: transparent;
+  }
+
+  p {
+    color: $clr-text;
+    margin-bottom: 1em;
+    font-size: 1.25em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  button {
+    color: $clr-text;
+    width: 80%;
+    margin: 0 auto;
+    padding: 0.7em;
+    font-size: 1.5em;
+    font-weight: 600;
+    border-radius: 1em;
+    background-color: rgba($clr-bg-300, 0.6);
+    box-shadow: 0 0 1em 1px rgba(#000000, 0.2);
+
+    @include btn-hover {
+      background-color: rgba($clr-bg-300, 1);
+      scale: 1.05;
+    }
+  }
+
+  img {
+    margin: 0 auto;
+    object-fit: contain;
+    height: auto;
+  }
+
+  @media (min-width: 69em) {
+    button {
+      display: none;
+    }
+  }
+}
