@@ -7,6 +7,11 @@
   gap: 2em;
   color: $clr-text;
 
+  .wrapper {
+    height: auto;
+    overflow: hidden;
+  }
+
   h1 {
     font-size: 4.5em;
     font-weight: 900;
@@ -26,8 +31,7 @@
 
   button {
     color: $clr-text;
-    width: 80%;
-    margin: 0 auto;
+    width: 100%;
     padding: 0.7em;
     font-size: 1.5em;
     font-weight: 600;
