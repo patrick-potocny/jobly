@@ -1,7 +1,22 @@
 @import 'reset';
+@import 'colors';
 
 body {
   padding-top: 0.5em;
   background: linear-gradient(180deg, #CAF0F8 0.64%, #4CC9F0 64.72%, #4361EE 120.89%);
   background-repeat: no-repeat;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: .6em;
+}
+ 
+body::-webkit-scrollbar-track {
+  background: $clr-bg-200 ;
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background: rgba($clr-text, 0.5);
+  border-radius: 1em;
 }

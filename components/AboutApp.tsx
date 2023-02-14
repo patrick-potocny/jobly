@@ -5,12 +5,20 @@ import styles from "@/styles/components/AboutApp.module.scss";
 import { motion } from "framer-motion";
 
 export default function AboutApp() {
+  function scrollToBottom() {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: 'smooth',
+    });
+  };
+
+
   return (
     <div className={styles.aboutAppDiv}>
       <div className={styles.wrapper}>
         <motion.div
-          initial={{ y: "100%" }}
-          animate={{ y: 0 }}
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: .6, delay: 0.6, type: "spring" }}
         >
           <h1>Make job hunting easier</h1>
@@ -18,8 +26,8 @@ export default function AboutApp() {
       </div>
       <div className={styles.wrapper}>
         <motion.div
-          initial={{ y: "140%" }}
-          animate={{ y: 0 }}
+          initial={{ y: "140%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: .6, delay: 1.1, type: "spring" }}
         >
           <p>
@@ -34,12 +42,12 @@ export default function AboutApp() {
           animate={{ opacity: 1 }}
           transition={{ duration: .6, delay: 1.9, type: "spring" }}
         >
-          <button>Get Started</button>
+          <button onClick={scrollToBottom}>Get Started</button>
         </motion.div>
       <div className={styles.wrapper}>
         <motion.div
-          initial={{ y: "100%" }}
-          animate={{ y: 0 }}
+          initial={{ y: "100%", opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
           transition={{ duration: .6, delay: 1.5, type: "spring" }}
         >
           <Image src={screenshots} alt="Screenshots from the app" />
