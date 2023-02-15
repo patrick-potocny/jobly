@@ -8,6 +8,7 @@
 }
 
 .header {
+  position: relative;
   height: 4em;
   padding-inline: 1em;
   display: flex;
@@ -62,6 +63,12 @@
 
     @include btn-hover {
       scale: 1.1;
+    }
+  }
+
+  @media (max-width: 38em) {
+    .nav, .signOut {
+      display: none;
     }
   }
 }
