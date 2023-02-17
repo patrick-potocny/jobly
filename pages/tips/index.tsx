@@ -10,8 +10,8 @@ export default function Tips() {
   const [user, loading] = useAuthState(auth);
 
   useEffect(() => {
-    if (!user) router.push("/");
-  }, [user, router]);
+    if (!user && !loading) router.push("/");
+  }, [user, router, loading]);
 
   return (
     <>

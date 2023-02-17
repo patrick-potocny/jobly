@@ -1,6 +1,6 @@
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
-import styles from "@/styles/LandingPage.module.scss";
+import styles from "@/styles/pages/LandingPage.module.scss";
 import SignInCard from "@/components/SignInCard";
 import AboutApp from "@/components/AboutApp";
 import { motion, AnimatePresence } from "framer-motion";

@@ -5,7 +5,27 @@
     cursor: pointer;
   }
 
-  &:active {  
-    scale: .9;
+  &:active {
+    scale: 0.9;
+  }
+}
+
+@mixin custom-scrollbar($color) {
+  &::-webkit-scrollbar {
+    width: .6em;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background-color: rgba($color, .3);
+    border-radius: 1em;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: $color;
+    border-radius: 1em;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: darken($color, 10%);
   }
 }

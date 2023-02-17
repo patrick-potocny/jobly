@@ -1,0 +1,123 @@
+@import "@/styles/colors";
+@import "@/styles/mixins";
+
+.addJob {
+  position: relative;
+  height: 90vh;
+  width: min(40em, 95vw);
+  background-color: $clr-white;
+  border-radius: 2em;
+  padding: .25em;
+  display: flex;
+  flex-direction: column;
+
+  .cancel {
+    margin-left: auto;
+    margin-bottom: 1em;
+    padding: 0.5em 1em;
+    border-radius: 0.625em 2em 0.625em 0.625em;
+    background-color: $clr-job-scroll;
+    color: $clr-white;
+
+    @include btn-hover {
+      scale: 1.05;
+      background-color: darken($clr-job-scroll, 10%);
+    }
+  }
+
+  .inputs {
+    height: 100%;
+    padding: .1em 2em 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+
+    @include custom-scrollbar($clr-job-scroll);
+
+    input,
+    textarea,
+    select {
+      border: none;
+      border-radius: .4em;
+      padding-block: .3em;
+
+      &:focus {
+        outline: 1px solid rgba(black, 0.3);
+      }
+    }
+
+    input[name="companyName"],
+    h2 {
+      font-size: 1.25em;
+      font-weight: 600;
+    }
+
+    input[name="jobTitle"] {
+      margin-top: 1em;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    select {
+      padding-inline: .5em;
+      margin-block: .5em;
+      width: fit-content;
+      font-weight: 500;
+    }
+
+    select[name="fit"], select[name="progress"] {
+      margin-block: 1.5em;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 15em;
+      padding-inline: .5em;
+      overflow-x: hidden;
+      overflow-y: auto;
+
+      @include custom-scrollbar($clr-job-scroll);
+    }
+  }
+
+  .btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1em;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5em;
+      width: 10em;
+      padding-block: 0.25em;
+
+      span {
+        color: $clr-white;
+        font-size: 1.25em;
+        font-weight: 600;
+      }
+
+      @include btn-hover {
+        scale: 1.05;
+      }
+    }
+
+    .delete {
+      background-color: $clr-del-btn;
+      border-radius: 0.625em 0.625em 0.625em 2em;
+    }
+
+    .save {
+      background-color: $clr-save-btn;
+      border-radius: 0.625em 0.625em 2em 0.625em;
+    }
+  }
+}

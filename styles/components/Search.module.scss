@@ -1,0 +1,22 @@
+@import '@/styles/colors';
+
+.search {
+  position: relative;
+
+  .icon {
+    position: absolute;
+    left: 1em;
+    top: 30%;
+  }
+
+  .input {
+    width: 8em;
+    height: 3em;
+    border: none;
+    background-color: $clr-bg-100;
+    color: $clr-text;
+    border-radius: 3em .6em .6em .6em;
+    padding-left: 3em;
+    outline: none;
+  }
+}

@@ -1,0 +1,106 @@
+@import "@/styles/colors";
+@import "@/styles/mixins";
+
+.selectedColumns {
+  margin-right: 1em;
+  position: relative;
+
+  .btn {
+    display: flex;
+    gap: 0.5em;
+    color: $clr-bg-300;
+    font-weight: 500;
+    padding: 0.37em 0.625em;
+    border: 1px solid $clr-bg-300;
+    border-radius: 0.6em;
+
+    @include btn-hover {
+      background-color: $clr-bg-100;
+      scale: 1.05;
+    }
+  }
+
+  .selection {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    width: 150%;
+    background-color: $clr-bg-200;
+    color: $clr-text;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    border-radius: 1em;
+    padding: 1em 2em;
+
+    .col {
+      width: 100%;
+      font-weight: 500;
+      display: flex;
+      justify-content: space-around;
+
+      @include btn-hover {
+        scale: 1.05;
+      }
+    }
+
+    .styledCheckbox {
+      position: absolute; // take it out of document flow
+      opacity: 0; // hide it
+
+      & + label {
+        position: relative;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      // Box.
+      & + label:before {
+        content: "";
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: text-top;
+        width: 20px;
+        height: 20px;
+        background: white;
+        border-radius: 1em;
+      }
+
+      // Box hover
+      &:hover + label:before {
+        background: $clr-text;
+      }
+
+      // Box focus
+      &:focus + label:before {
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+      }
+
+      // Box checked
+      &:checked + label:before {
+        background: $clr-text;
+      }
+
+      // Checkmark
+      &:checked + label:after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 11px;
+        background: white;
+        width: 2px;
+        height: 2px;
+        box-shadow: 
+          2px 0 0 white,
+          4px 0 0 white,
+          4px -2px 0 white,
+          4px -4px 0 white,
+          4px -6px 0 white,
+          4px -8px 0 white;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
