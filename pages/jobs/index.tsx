@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
-import { auth } from "@/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 import Layout from "@/components/Layout";
 import Loading from "@/components/Loading";
 import styles from "@/styles/pages/Jobs.module.scss";
 import Search from "@/components/Search";
 import SelectedColumns from "@/components/SelectedColumns";
 import Modal from "@/components/Modal";
-import AddJob from "@/components/AddJob";
+import Job from "@/components/Job";
+import Table from "@/components/Table";
 
 export default function Jobs() {
   const router = useRouter();
   const [user, loading] = useAuthState(auth);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [addModal, setAddModal] = useState(false);
 
   useEffect(() => {
@@ -24,15 +25,20 @@ export default function Jobs() {
     <>
       <Layout>
         <div className={styles.controls}>
-          <Search search={search} setSearch={setSearch}/>
+          <Search search={search} setSearch={setSearch} />
           <div className={styles.right}>
             <SelectedColumns />
-            <button onClick={() => setAddModal(true)} className={styles.addJob}><span>+ Add Job</span></button>
+            <button onClick={() => setAddModal(true)} className={styles.addJob}>
+              <span>+ Add Job</span>
+            </button>
           </div>
         </div>
+        <Table />
       </Layout>
 
-      <Modal isOpen={addModal} setIsOpen={setAddModal}><AddJob setIsOpen={setAddModal}/></Modal>
+      <Modal isOpen={addModal} setIsOpen={setAddModal}>
+        <Job setIsOpen={setAddModal} />
+      </Modal>
       {loading && <Loading />}
     </>
   );

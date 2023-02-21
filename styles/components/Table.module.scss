@@ -1,0 +1,58 @@
+@import "@/styles/colors";
+@import "@/styles/mixins";
+
+.tableWrapper {
+  width: 100%;
+  overflow: auto;
+
+  @include custom-scrollbar($clr-bg-300);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  td {
+    padding: 1em 3em 1em 0;
+
+    &:first-child {
+      padding-right: 1em;
+      padding-left: 1em;
+    }
+  }
+
+  thead {
+    font-weight: bold;
+    text-align: left;
+    background-color: rgba($clr-bg-100, 0.5);
+
+    th {
+      padding: 1em 3em 1em 0;
+      transition: 0.2s ease-out;
+      &:hover {
+        background-color: $clr-bg-100;
+        cursor: pointer;
+      }
+
+      &:first-child {
+        color: transparent;
+
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+
+  tbody td {
+    color: #636363;
+    white-space: nowrap;
+  }
+
+  tbody tr {
+    background-color: rgba($clr-bg-100, 0.5);
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+}

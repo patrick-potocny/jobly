@@ -3,34 +3,24 @@ import styles from "@/styles/components/AddJob.module.scss";
 import Image from "next/image";
 import del from "@/public/images/delete.svg";
 import save from "@/public/images/save.svg";
+import { JobType } from "@/lib/types";
 
-type FormDataType = {
-  companyName: string;
-  companyWebsite: string;
-  jobTitle: string;
-  pay: number | '';
-  location: string;
-  remote: "Remote" | "On site" | "Hybrid";
-  jobListingLink: string;
-  fit: 1 | 2 | 3 | 4 | 5;
-  contactName: string;
-  contactEmail: string;
-  contactPhone: string;
-  progress: "Not Applied" | "Applied" | "Interview" | "Offer" | "Rejected";
-  notes: string;
-};
-
-type EventType = ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLTextAreaElement>
+type EventType =
+  | ChangeEvent<HTMLInputElement>
+  | ChangeEvent<HTMLSelectElement>
+  | ChangeEvent<HTMLTextAreaElement>;
 
 type Props = {
   setIsOpen: (value: boolean) => void;
+  id?: string;
 };
 
-const initialFormData: FormDataType = {
+const initialFormData: JobType = {
+  id: "",
   companyName: "",
   companyWebsite: "",
   jobTitle: "",
-  pay: '',
+  pay: undefined,
   location: "",
   remote: "Remote",
   jobListingLink: "",
@@ -42,9 +32,8 @@ const initialFormData: FormDataType = {
   notes: "",
 };
 
-
-export default function AddJob({ setIsOpen }: Props) {
-  const [formData, setFormData] = useState<FormDataType>(initialFormData);
+export default function Job({ setIsOpen, id }: Props) {
+  const [formData, setFormData] = useState<JobType>(initialFormData);
 
   function handleChange(event: EventType) {
     const { name, value } = event.target;
@@ -56,7 +45,9 @@ export default function AddJob({ setIsOpen }: Props) {
 
   return (
     <div className={styles.addJob}>
-      <button className={styles.cancel} onClick={() => setIsOpen(false)}>&#x2715; Close</button>
+      <button className={styles.cancel} onClick={() => setIsOpen(false)}>
+        &#x2715; Close
+      </button>
       <form className={styles.inputs}>
         <input
           type="text"

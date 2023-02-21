@@ -1,0 +1,12 @@
+@import "@/styles/colors";
+@import "@/styles/mixins";
+
+.webLink {
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 1.1em;
+
+  @include btn-hover {
+    color: $clr-demo-btn;
+  }
+}

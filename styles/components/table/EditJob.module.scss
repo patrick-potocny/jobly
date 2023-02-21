@@ -1,0 +1,9 @@
+@import '@/styles/mixins';
+
+.btn {
+  width: 2em;
+  height: 2em;
+  @include btn-hover {
+    scale: 1.1;
+  }
+}

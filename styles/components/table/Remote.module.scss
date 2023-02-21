@@ -1,0 +1,13 @@
+@import "@/styles/mixins";
+
+.remote {
+  @include colored-pill(blue);
+}
+
+.onSite {
+  @include colored-pill(rgb(250, 15, 15));
+}
+
+.hybrid {
+  @include colored-pill(rgb(0, 122, 0));
+}

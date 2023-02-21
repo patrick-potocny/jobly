@@ -17,8 +17,8 @@ const colList = [
 ];
 
 const variants = {
-  open: { opacity: 1, y: 0 },
-  closed: { opacity: 0, y: 50 },
+  open: { opacity: 1, y: 0, display: "flex" },
+  closed: { opacity: 0, y: 50, display: "none" },
 };
 
 export default function SelectedColumns() {

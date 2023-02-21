@@ -1,0 +1,21 @@
+@import '@/styles/mixins';
+
+.notApplied {
+  @include colored-pill(grey);
+}
+
+.applied {
+  @include colored-pill(teal);
+}
+
+.interview {
+  @include colored-pill(rgb(77, 155, 0));
+}
+
+.offer {
+  @include colored-pill(rgba(119, 1, 119, 0.815));
+}
+
+.rejected {
+  @include colored-pill(brown);
+}

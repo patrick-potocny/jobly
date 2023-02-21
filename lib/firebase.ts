@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { getFirestore } from "firebase/firestore";
 
 
 // Your web app's Firebase configuration
@@ -16,14 +17,15 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Google Sign In
 const googleProvider = new GoogleAuthProvider();
 async function signInWithGoogle() {
   try {
     const res = await signInWithPopup(auth, googleProvider);
-  } catch (err) {
-    console.error(err);
+  } catch (e) {
+    alert('Error signing in with Google \n Please try again');
   }
 };
 
@@ -32,9 +34,9 @@ async function SignInDemoUser() {
   try {
     await signInWithEmailAndPassword(auth, "demouser@demo.com", "demouser123");
     // handle successful login
-  } catch (error) {
-    // handle login error
+  } catch (e) {
+    alert('Error signing in with Demo User \n Please try again');
   }
 }
 
-export { auth, signInWithGoogle, SignInDemoUser };
+export { auth, db, signInWithGoogle, SignInDemoUser };
