@@ -1,7 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { signInWithPopup, GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
-import { getFirestore } from "firebase/firestore";
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { DocumentData, addDoc, collection, deleteDoc, doc, getFirestore, setDoc } from "firebase/firestore";
+import { JobType } from "./types";
 
 
 // Your web app's Firebase configuration
@@ -39,4 +40,32 @@ async function SignInDemoUser() {
   }
 }
 
-export { auth, db, signInWithGoogle, SignInDemoUser };
+// Save job to db
+async function saveJob(jobData: JobType | DocumentData, jobId: string | undefined, userEmail: string | undefined | null) {
+  if (jobId && userEmail) {
+    try {
+      await setDoc(doc(db, `users/${userEmail}/jobs`, jobId), jobData);
+    } catch (e) {
+      console.log(e);
+    }
+  } else if (userEmail) {
+    try {
+      await addDoc(collection(db, `users/${userEmail}/jobs`), jobData);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
+// Delete job from db
+async function delJob(jobId: string, userEmail: string | undefined | null) {
+  if (userEmail) {
+    try {
+      await deleteDoc(doc(db, `users/${userEmail}/jobs`, jobId));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
+export { auth, db, signInWithGoogle, SignInDemoUser, saveJob, delJob };

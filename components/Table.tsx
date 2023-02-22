@@ -7,7 +7,7 @@ import { collection, getDocs } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { processJobs } from "@/lib/utils";
 import { CompanyType } from "@/lib/types";
-import { useSortBy, useTable } from "react-table";
+import { useGlobalFilter, useSortBy, useTable } from "react-table";
 import EditJob from "@/components/table/EditJob";
 import styles from "@/styles/components/Table.module.scss";
 import Remote from "@/components/table/Remote";
@@ -16,22 +16,31 @@ import linkIcon from "@/public/images/link.svg";
 import Fit from "@/components/table/Fit";
 import Progress from "@/components/table/Progress";
 import WebLink from "@/components/table/WebLink";
+import Search from "@/components/Search";
+import SelectedColumns from "@/components/SelectedColumns";
+import Modal from "@/components/Modal";
+import Job from "@/components/Job";
+import NoJobs from "./NoJobs";
 
 export default function Table() {
   const [jobs, setJobs] = useState([]);
+  const [noJobs, setNoJobs] = useState(false);
   const [user] = useAuthState(auth);
+  const [addModal, setAddModal] = useState(false);
 
   useEffect(() => {
     if (user) {
-      const getUserJobs = async () => {
+      async function getUserJobs() {
         const jobsRef = collection(db, `users/${user.email}/jobs`);
         const jobsDoc = await getDocs(jobsRef);
-        setJobs(
-          processJobs(
-            jobsDoc.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
-          )
+        const processedJobs = processJobs(
+          jobsDoc.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         );
-      };
+        setNoJobs(false);
+        if (processedJobs.length === 0) setNoJobs(true);
+
+        setJobs(processedJobs);
+      }
 
       getUserJobs();
     }
@@ -102,45 +111,78 @@ export default function Table() {
     []
   );
 
-  const tableInstance = useTable({ columns, data: jobs }, useSortBy);
+  const tableInstance = useTable(
+    { columns, data: jobs },
+    useGlobalFilter,
+    useSortBy
+  );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance;
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    setGlobalFilter,
+    state,
+    allColumns,
+  } = tableInstance;
 
   return (
-    <div className={styles.tableWrapper}>
-      <table {...getTableProps()} className={styles.table}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th
-                  {...column.getHeaderProps(
-                    column.getSortByToggleProps({ title: undefined })
-                  )}
-                >
-                  {column.render("Header")}
-                  {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
-                </th>
+    <>
+      <div className={styles.controls}>
+        <Search
+          setGlobalFilter={setGlobalFilter}
+          globalFilter={state.globalFilter}
+        />
+        <div className={styles.right}>
+          <SelectedColumns cols={allColumns} />
+          <button onClick={() => setAddModal(true)} className={styles.addJob}>
+            <span>+ Add Job</span>
+          </button>
+        </div>
+      </div>
+      {noJobs ? (
+        <NoJobs />
+      ) : (
+        <div className={styles.tableWrapper}>
+          <table {...getTableProps()} className={styles.table}>
+            <thead>
+              {headerGroups.map((headerGroup) => (
+                <tr {...headerGroup.getHeaderGroupProps()}>
+                  {headerGroup.headers.map((column) => (
+                    <th
+                      {...column.getHeaderProps(
+                        column.getSortByToggleProps({ title: undefined })
+                      )}
+                    >
+                      {column.render("Header")}
+                      {column.isSorted ? (column.isSortedDesc ? "▼" : "▲") : ""}
+                    </th>
+                  ))}
+                </tr>
               ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+            </thead>
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row) => {
+                prepareRow(row);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell) => {
+                      return (
+                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <Modal isOpen={addModal} setIsOpen={setAddModal}>
+        <Job setIsOpen={setAddModal} />
+      </Modal>
+    </>
   );
 }

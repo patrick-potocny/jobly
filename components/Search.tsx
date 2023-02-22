@@ -1,14 +1,19 @@
-import React from "react";
+// Disabling ts-check because react-table types are not up to date
+// @ts-nocheck
+
+import React, { useState } from "react";
 import Image from "next/image";
 import magnifyingGlass from "@/public/images/magnifying-glass.svg";
 import styles from "@/styles/components/Search.module.scss";
+import { useAsyncDebounce } from "react-table";
+import 'regenerator-runtime/runtime'
 
-type Props = {
-  search: string;
-  setSearch: (search: string) => void;
-};
+export default function Search({ globalFilter, setGlobalFilter }) {
+  const [value, setValue] = useState(globalFilter);
+  const onChange = useAsyncDebounce((value) => {
+    setGlobalFilter(value || undefined);
+  }, 300);
 
-export default function Search({ search, setSearch }: Props) {
   return (
     <div className={styles.search}>
       <Image
@@ -20,8 +25,11 @@ export default function Search({ search, setSearch }: Props) {
         type="text"
         placeholder="Search..."
         className={styles.input}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        value={value || ""}
+        onChange={(e) => {
+          setValue(e.target.value);
+          onChange(e.target.value);
+        }}
       />
     </div>
   );

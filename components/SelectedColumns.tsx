@@ -3,25 +3,15 @@ import Image from "next/image";
 import columns from "@/public/images/columns.svg";
 import styles from "@/styles/components/SelectedColumns.module.scss";
 import { motion } from "framer-motion";
-import { log } from "console";
+import { ColumnInstance } from "react-table";
 
-const colList = [
-  "Column1",
-  "Column2",
-  "Column3",
-  "Column4",
-  "Column5",
-  "Column6",
-  "Column7",
-  "Column8",
-];
 
 const variants = {
   open: { opacity: 1, y: 0, display: "flex" },
   closed: { opacity: 0, y: 50, display: "none" },
 };
 
-export default function SelectedColumns() {
+export default function SelectedColumns({cols}: {cols: ColumnInstance<object>[]}) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [checkedList, setCheckedList] = useState<string[]>([]);
 
@@ -50,14 +40,17 @@ export default function SelectedColumns() {
         variants={variants}
         className={styles.selection}
       >
-        {colList.map((col) => (
-          <div className={styles.col} key={col}>
-            <input name={col} className={styles.styledCheckbox} type="checkbox" id={col} 
-            checked={checkedList.includes(col)}
-            onChange={handleCheckboxChange}/>
-            <label htmlFor={col}>{col}</label>
+        {cols.map((col) => {
+          if (col.Header === "") return
+          return (
+          <div className={styles.col} key={col.id}>
+            <label>
+            <input type="checkbox" {...col.getToggleHiddenProps()}/>
+            {` ${col.Header}`}
+            </label>
           </div>
-        ))}
+          )
+        })}
       </motion.div>
     </div>
   );

@@ -3,7 +3,7 @@ export type JobType = {
   companyName: string;
   companyWebsite: string;
   jobTitle: string;
-  pay: number | undefined;
+  pay: string;
   location: string;
   remote: "Remote" | "On Site" | "Hybrid";
   jobListingLink: string;

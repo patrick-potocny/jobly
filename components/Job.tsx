@@ -1,9 +1,13 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
 import styles from "@/styles/components/AddJob.module.scss";
 import Image from "next/image";
 import del from "@/public/images/delete.svg";
 import save from "@/public/images/save.svg";
 import { JobType } from "@/lib/types";
+import { DocumentData, doc, getDoc } from "firebase/firestore";
+import { auth, db, delJob, saveJob } from "@/lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { toast, Toaster } from "react-hot-toast";
 
 type EventType =
   | ChangeEvent<HTMLInputElement>
@@ -12,7 +16,7 @@ type EventType =
 
 type Props = {
   setIsOpen: (value: boolean) => void;
-  id?: string;
+  id: string | undefined;
 };
 
 const initialFormData: JobType = {
@@ -20,7 +24,7 @@ const initialFormData: JobType = {
   companyName: "",
   companyWebsite: "",
   jobTitle: "",
-  pay: undefined,
+  pay: "",
   location: "",
   remote: "Remote",
   jobListingLink: "",
@@ -32,8 +36,46 @@ const initialFormData: JobType = {
   notes: "",
 };
 
-export default function Job({ setIsOpen, id }: Props) {
-  const [formData, setFormData] = useState<JobType>(initialFormData);
+function Job({ setIsOpen, id }: Props) {
+  const [formData, setFormData] = useState<JobType | DocumentData>(
+    initialFormData
+  );
+  const [user] = useAuthState(auth);
+
+  // TODO: This runs twice, solve this
+  useEffect(() => {
+    async function getJob() {
+      if (id && user) {
+        const docRef = doc(db, `users/${user.email}/jobs`, id);
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) setFormData(docSnapshot.data());
+      }
+    }
+
+    getJob();
+  }, [id, user]);
+
+  async function saveJobData() {
+    await toast.promise(saveJob(formData, id, user?.email), {
+      loading: "Saving...",
+      success: <b>Job saved!</b>,
+      error: <b>Could not save, try again.</b>,
+    });
+    window.location.reload();
+  }
+
+  async function deleteJob() {
+    if (id && user) {
+      await toast.promise(delJob(id, user.email), {
+        loading: "Deleting...",
+        success: <b>Job deleted!</b>,
+        error: <b>Could not delete try again.</b>,
+      });
+      window.location.reload();
+    } else {
+      setIsOpen(false);
+    }
+  }
 
   function handleChange(event: EventType) {
     const { name, value } = event.target;
@@ -165,13 +207,20 @@ export default function Job({ setIsOpen, id }: Props) {
         ></textarea>
       </form>
       <div className={styles.btns}>
-        <button className={styles.delete}>
+        <button className={styles.delete} onClick={deleteJob}>
           <Image src={del} alt="Thrash" /> <span>Delete</span>
         </button>
-        <button className={styles.save}>
+        <button className={styles.save} onClick={saveJobData}>
           <Image src={save} alt="Floppy disk icon" /> <span>Save</span>
         </button>
       </div>
+      <Toaster />
     </div>
   );
 }
+
+Job.defaultProps = {
+  id: undefined,
+};
+
+export default Job;
