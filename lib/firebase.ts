@@ -68,4 +68,32 @@ async function delJob(jobId: string, userEmail: string | undefined | null) {
   }
 }
 
-export { auth, db, signInWithGoogle, SignInDemoUser, saveJob, delJob };
+// Save note to db
+async function saveNote(note: JobType | DocumentData, noteId: string | undefined, userEmail: string | undefined | null) {
+  if (noteId && userEmail) {
+    try {
+      await setDoc(doc(db, `users/${userEmail}/notes`, noteId), note);
+    } catch (e) {
+      console.log(e);
+    }
+  } else if (userEmail) {
+    try {
+      await addDoc(collection(db, `users/${userEmail}/notes`), note);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
+// Delete job from db
+async function delNote(noteID: string, userEmail: string | undefined | null) {
+  if (userEmail) {
+    try {
+      await deleteDoc(doc(db, `users/${userEmail}/notes`, noteID));
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
+export { auth, db, signInWithGoogle, SignInDemoUser, saveJob, delJob, saveNote, delNote };

@@ -20,7 +20,6 @@ type Props = {
 };
 
 const initialFormData: JobType = {
-  id: "",
   companyName: "",
   companyWebsite: "",
   jobTitle: "",

@@ -39,3 +39,14 @@
   color: black;
   background-color: lighten($color, 40%);
 }
+
+@mixin note {
+  width: 18.75em;
+  height: 18.75em;
+  border: 4px solid $clr-bg-200;
+  border-radius: 3em;
+
+  @include btn-hover {
+    background-color: $clr-bg-100;
+  }
+}

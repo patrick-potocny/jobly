@@ -1,5 +1,4 @@
 export type JobType = {
-  id: string;
   companyName: string;
   companyWebsite: string;
   jobTitle: string;
@@ -14,6 +13,18 @@ export type JobType = {
   progress: "Not Applied" | "Applied" | "Interview" | "Offer" | "Rejected";
   notes: string;
 };
+
+export type NoteType = {
+  title: string;
+  content: string;
+};
+
+export type NotesListType = {
+  id: string;
+  title: string;
+  content: string;
+}[];
+
 
 export type CompanyType = {
   companyName: string;

@@ -1,0 +1,29 @@
+@import "@/styles/colors";
+@import "@/styles/mixins";
+
+.notes {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(18.75em, 18.75em));
+  grid-gap: 1em;
+
+  .add {
+    @include note;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .note {
+    @include note;
+    padding: 1em;
+    color: $clr-text;
+    overflow: hidden;
+
+    h2 {
+      font-size: 1.25em;
+      font-weight: 600;
+      margin-bottom: 0.5em;
+    }
+  }
+}

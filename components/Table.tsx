@@ -20,11 +20,11 @@ import Search from "@/components/Search";
 import SelectedColumns from "@/components/SelectedColumns";
 import Modal from "@/components/Modal";
 import Job from "@/components/Job";
-import NoJobs from "./NoJobs";
+import NoneFound from "@/components/NoneFound";
 
 export default function Table() {
   const [jobs, setJobs] = useState([]);
-  const [noJobs, setNoJobs] = useState(false);
+  const [noJobs, setNoJobs] = useState(true);
   const [user] = useAuthState(auth);
   const [addModal, setAddModal] = useState(false);
 
@@ -143,7 +143,7 @@ export default function Table() {
         </div>
       </div>
       {noJobs ? (
-        <NoJobs />
+        <NoneFound>No jobs found, <br /> press the + Add Job button ➚</NoneFound>
       ) : (
         <div className={styles.tableWrapper}>
           <table {...getTableProps()} className={styles.table}>

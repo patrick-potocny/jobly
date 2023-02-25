@@ -1,0 +1,114 @@
+import React, { useState, ChangeEvent, useEffect } from "react";
+import styles from "@/styles/components/AddJob.module.scss";
+import Image from "next/image";
+import del from "@/public/images/delete.svg";
+import save from "@/public/images/save.svg";
+import { NoteType } from "@/lib/types";
+import { DocumentData, doc, getDoc } from "firebase/firestore";
+import { auth, db, delNote, saveNote } from "@/lib/firebase";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { toast, Toaster } from "react-hot-toast";
+
+type EventType =
+  | ChangeEvent<HTMLInputElement>
+  | ChangeEvent<HTMLTextAreaElement>;
+
+type Props = {
+  setIsOpen: (value: boolean) => void;
+  id: string | undefined;
+};
+
+const initialFormData: NoteType = {
+  title: "",
+  content: "",
+};
+
+function Note({ setIsOpen, id }: Props) {
+  const [formData, setFormData] = useState<NoteType | DocumentData>(
+    initialFormData
+  );
+  const [user] = useAuthState(auth);
+
+  // TODO: This runs twice, solve this
+  useEffect(() => {
+    async function getNote() {
+      if (id && user) {
+        const docRef = doc(db, `users/${user.email}/notes`, id);
+        const docSnapshot = await getDoc(docRef);
+        if (docSnapshot.exists()) setFormData(docSnapshot.data());
+      }
+    }
+
+    getNote();
+  }, [id, user]);
+
+  async function saveNoteData() {
+    await toast.promise(saveNote(formData, id, user?.email), {
+      loading: "Saving...",
+      success: <b>Note saved!</b>,
+      error: <b>Could not save, try again.</b>,
+    });
+    window.location.reload();
+  }
+
+  async function deleteNote() {
+    if (id && user) {
+      await toast.promise(delNote(id, user.email), {
+        loading: "Deleting...",
+        success: <b>Note deleted!</b>,
+        error: <b>Could not delete try again.</b>,
+      });
+      window.location.reload();
+    } else {
+      setIsOpen(false);
+    }
+  }
+
+  function handleChange(event: EventType) {
+    const { name, value } = event.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+  }
+
+  return (
+    <div className={styles.addJob}>
+      <button className={styles.cancel} onClick={() => setIsOpen(false)}>
+        &#x2715; Close
+      </button>
+      <form className={styles.inputs}>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Note's title.."
+          value={formData.title}
+          onChange={handleChange}
+        />
+        <textarea
+          name="content"
+          id="content"
+          placeholder="- Some useful notes.."
+          value={formData.content}
+          onChange={handleChange}
+        ></textarea>
+      </form>
+      <div className={styles.btns}>
+        <button className={styles.delete} onClick={deleteNote}>
+          <Image src={del} alt="Thrash" /> <span>Delete</span>
+        </button>
+        <button className={styles.save} onClick={saveNoteData}>
+          <Image src={save} alt="Floppy disk icon" /> <span>Save</span>
+        </button>
+      </div>
+      <Toaster />
+    </div>
+  );
+}
+
+Note.defaultProps = {
+  id: undefined,
+};
+
+export default Note;

@@ -49,6 +49,7 @@
     }
 
     input[name="companyName"],
+    input[name="title"],
     h2 {
       font-size: 1.25em;
       font-weight: 600;
@@ -78,6 +79,7 @@
     textarea {
       resize: none;
       min-height: 15em;
+      height: 30em;
       padding-inline: .5em;
       overflow-x: hidden;
       overflow-y: auto;
