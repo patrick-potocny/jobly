@@ -4,7 +4,7 @@
 .notes {
   display: grid;
   justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(18.75em, 18.75em));
+  grid-template-columns: repeat(auto-fit, minmax(18em, 18em));
   grid-gap: 1em;
 
   .add {
@@ -19,11 +19,40 @@
     padding: 1em;
     color: $clr-text;
     overflow: hidden;
+    position: relative;
 
     h2 {
       font-size: 1.25em;
       font-weight: 600;
       margin-bottom: 0.5em;
+    }
+
+    p {
+      display: -webkit-box;
+      -webkit-line-clamp: 5;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    button {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      padding: 1em;
+      background-color: $clr-bg-100;
+      border: 4px solid $clr-bg-200;
+      border-radius: 1em 1em 3em 1em;
+
+      img {
+        width: 2em;
+        height: 2em;
+      }
+
+      @include btn-hover {
+        background-color: $clr-bg-200;
+        border-color: $clr-bg-300;
+        scale: 1.1;
+      }
     }
   }
 }

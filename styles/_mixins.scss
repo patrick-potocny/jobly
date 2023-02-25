@@ -41,10 +41,11 @@
 }
 
 @mixin note {
-  width: 18.75em;
-  height: 18.75em;
+  width: 18em;
+  height: 18em;
   border: 4px solid $clr-bg-200;
   border-radius: 3em;
+  background-color: rgba($clr-bg-100, .5);
 
   @include btn-hover {
     background-color: $clr-bg-100;
