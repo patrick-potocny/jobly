@@ -1,0 +1,53 @@
+@import '@/styles/colors';
+@import '@/styles/mixins';
+
+.article {
+  width: min(50em, 95vw);
+  height: 100%;
+  overflow: auto;
+  margin: 0 auto;
+  padding-inline: 1em; 
+  color: $clr-text;
+
+  @include custom-scrollbar($clr-bg-200);
+
+  img {
+    border-radius: 1em;
+    max-width: 100%;
+    height: auto;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 3em;
+    font-weight: 800;
+    margin-top: -.8em;
+  }
+
+  h2 {
+    font-size: 2em;
+    font-weight: 700;
+    margin-top: 1.5em;
+  }
+
+  p {
+    font-size: 1.25em;
+    margin-block: 1em;
+
+  }
+
+  a {
+    text-decoration: underline;
+    font-weight: 500;
+  }
+
+  ul {
+    padding-inline: 1em;
+    list-style: disc;
+
+    li {
+      font-size: 1.25em;
+      margin-block: 1em;
+    }
+  }
+}

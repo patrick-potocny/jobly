@@ -13,6 +13,7 @@ import Note from "@/components/Note";
 import { NotesListType } from "@/lib/types";
 import { toast, Toaster } from "react-hot-toast";
 import copy from "@/public/images/copy.svg";
+import Head from "next/head";
 
 export default function Notes() {
   const router = useRouter();
@@ -58,6 +59,9 @@ export default function Notes() {
 
   return (
     <>
+      <Head>
+        <title>Notes</title>
+      </Head>
       <Layout>
         <div className={styles.notes}>
           {notes.map((note) => (

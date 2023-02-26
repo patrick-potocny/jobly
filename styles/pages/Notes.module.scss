@@ -2,10 +2,14 @@
 @import "@/styles/mixins";
 
 .notes {
+  height: 100%;
+  overflow: auto;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(auto-fit, minmax(18em, 18em));
   grid-gap: 1em;
+
+  @include custom-scrollbar($clr-bg-200);
 
   .add {
     @include note;

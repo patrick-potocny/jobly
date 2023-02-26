@@ -75,8 +75,9 @@
 }
 
 .main {
-  padding: .5em .625em 0;
+  padding: .5em .625em 1em;
   height: 100%;
   border-radius: 3em 3em 0 0;
   background-color: #fff;
+  overflow: hidden;
 }

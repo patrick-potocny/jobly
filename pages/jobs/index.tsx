@@ -5,6 +5,7 @@ import { auth, db } from "@/lib/firebase";
 import Layout from "@/components/Layout";
 import Loading from "@/components/Loading";
 import Table from "@/components/Table";
+import Head from "next/head";
 
 export default function Jobs() {
   const router = useRouter();
@@ -16,6 +17,9 @@ export default function Jobs() {
 
   return (
     <>
+      <Head>
+        <title>Jobs</title>
+      </Head>
       <Layout>
         <Table />
       </Layout>
