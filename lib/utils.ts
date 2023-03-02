@@ -1,9 +1,8 @@
-import { JobType } from "@/lib/types";
 import { DocumentData } from "firebase/firestore";
 
 // processes data from db to be used in table 
 export function processJobs(jobs: DocumentData) {
-  const processedJobs = jobs.map((job: JobType) => {
+  const processedJobs = jobs.map((job: DocumentData) => {
     const {
       id,
       companyName,

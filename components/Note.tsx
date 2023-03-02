@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import styles from "@/styles/components/AddJob.module.scss";
+import styles from "@/styles/components/InputCard.module.scss";
 import Image from "next/image";
 import del from "@/public/images/delete.svg";
 import save from "@/public/images/save.svg";
@@ -23,6 +23,7 @@ const initialFormData: NoteType = {
   content: "",
 };
 
+// If the id is undefined, it is a new job and firestore autogenerates it
 function Note({ setIsOpen, id }: Props) {
   const [formData, setFormData] = useState<NoteType | DocumentData>(
     initialFormData
@@ -33,7 +34,7 @@ function Note({ setIsOpen, id }: Props) {
   useEffect(() => {
     async function getNote() {
       if (id && user) {
-        const docRef = doc(db, `users/${user.email}/notes`, id);
+        const docRef = doc(db, `users/${user.uid}/notes`, id);
         const docSnapshot = await getDoc(docRef);
         if (docSnapshot.exists()) setFormData(docSnapshot.data());
       }
@@ -43,7 +44,12 @@ function Note({ setIsOpen, id }: Props) {
   }, [id, user]);
 
   async function saveNoteData() {
-    await toast.promise(saveNote(formData, id, user?.email), {
+    if (user?.email === "demouser@demo.com") {
+      toast.error('You are using a demo account, you cannot modify example data.')
+      return
+    }
+    if (user?.email === 'demo')
+    await toast.promise(saveNote(formData, id, user?.uid), {
       loading: "Saving...",
       success: <b>Note saved!</b>,
       error: <b>Could not save, try again.</b>,
@@ -52,8 +58,13 @@ function Note({ setIsOpen, id }: Props) {
   }
 
   async function deleteNote() {
+    if (user?.email === "demouser@demo.com") {
+      toast.error('You are using a demo account, you cannot modify example data.')
+      return
+    }
+    if (user?.email === 'demo')
     if (id && user) {
-      await toast.promise(delNote(id, user.email), {
+      await toast.promise(delNote(id, user.uid), {
         loading: "Deleting...",
         success: <b>Note deleted!</b>,
         error: <b>Could not delete try again.</b>,

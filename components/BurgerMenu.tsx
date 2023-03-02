@@ -7,9 +7,30 @@ import { auth } from "@/lib/firebase";
 import signOut from "@/public/images/sign-out.svg";
 import { motion, Variants } from "framer-motion";
 
-const variants = {
-  open: { opacity: 1, x: 0 },
-  closed: { opacity: 0, x: "100%" },
+const variants: Variants = {
+  open: { opacity: 1, y: 0 },
+  closed: { opacity: 0, y: "-200%" },
+};
+
+const listVariants: Variants = {
+  open: {
+    clipPath: "inset(0% 0% 0% 0% round 10px)",
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.7,
+      delayChildren: 0.2,
+      staggerChildren: 0.05,
+    },
+  },
+  closed: {
+    clipPath: "inset(10% 50% 90% 50% round 10px)",
+    transition: {
+      type: "spring",
+      bounce: 0,
+      duration: 0.3,
+    },
+  },
 };
 
 const itemVariants: Variants = {
@@ -38,28 +59,7 @@ export default function BurgerMenu() {
         variants={variants}
         className={styles.menu}
       >
-        <motion.ul
-          variants={{
-            open: {
-              clipPath: "inset(0% 0% 0% 0% round 10px)",
-              transition: {
-                type: "spring",
-                bounce: 0,
-                duration: 0.7,
-                delayChildren: 0.2,
-                staggerChildren: 0.05,
-              },
-            },
-            closed: {
-              clipPath: "inset(10% 50% 90% 50% round 10px)",
-              transition: {
-                type: "spring",
-                bounce: 0,
-                duration: 0.3,
-              },
-            },
-          }}
-        >
+        <motion.ul variants={listVariants}>
           <motion.li variants={itemVariants}>
             <Link href="/jobs">Jobs</Link>
           </motion.li>

@@ -21,7 +21,7 @@ function Layout({ children }: Props) {
   return (
     <div className={styles.layout}>
       <header className={styles.header}>
-        <Image src={logo} alt="Jobly logo" className={styles.logo} />
+        <Image src={logo} alt="Jobly logo" className={styles.logo} priority/>
         <nav>
           <ul role="navigation" className={styles.nav}>
             <li className={currentPage === "jobs" ? styles.selected : ""}>

@@ -3,12 +3,12 @@
 .container {
   max-width: 75em;
   margin: 0 auto;
-}
-
-.logo {
-  margin: 0 auto;
-  width: 13em;
-  height: auto;
+  
+  .logo {
+    margin: 0 auto;
+    width: 13em;
+    height: auto;
+  }
 }
 
 .main {
@@ -30,14 +30,6 @@
   align-items: center;
 }
 
-.overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: $clr-text;
-}
 
 @media (max-width: 69em) {
   .main {

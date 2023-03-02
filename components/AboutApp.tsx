@@ -19,7 +19,7 @@ export default function AboutApp() {
         <motion.div
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: .6, delay: 0.6, type: "spring" }}
+          transition={{ duration: .6, delay: 0.3, type: "spring" }}
         >
           <h1>Make job hunting easier</h1>
         </motion.div>
@@ -28,7 +28,7 @@ export default function AboutApp() {
         <motion.div
           initial={{ y: "140%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: .6, delay: 1.1, type: "spring" }}
+          transition={{ duration: .6, delay: .8, type: "spring" }}
         >
           <p>
             Jobly helps job seekers stay organized by tracking their job search.
@@ -40,7 +40,7 @@ export default function AboutApp() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: .6, delay: 1.9, type: "spring" }}
+          transition={{ duration: .6, delay: 1.3, type: "spring" }}
         >
           <button onClick={scrollToBottom}>Get Started</button>
         </motion.div>
@@ -48,9 +48,9 @@ export default function AboutApp() {
         <motion.div
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: .6, delay: 1.5, type: "spring" }}
+          transition={{ duration: .6, delay: 1.2, type: "spring" }}
         >
-          <Image src={screenshots} alt="Screenshots from the app" />
+          <Image src={screenshots} alt="Screenshots from the app" priority={true}/>
         </motion.div>
       </div>
     </div>

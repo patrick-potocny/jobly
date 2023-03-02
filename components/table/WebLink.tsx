@@ -1,14 +1,13 @@
 import React, { ReactNode, useEffect, useState } from "react";
 import styles from "@/styles/components/table/WebLink.module.scss";
 
-export default function WebLink({
-  value,
-  children,
-}: {
+type Props = {
   value: string;
   children: ReactNode;
-}) {
-  const [url, setUrl] = useState(value);
+};
+
+export default function WebLink({ value, children }: Props) {
+  const [url, setUrl] = useState<string>(value);
 
   useEffect(() => {
     let updatedUrl = value;

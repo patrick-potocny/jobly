@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import styles from "@/styles/components/AddJob.module.scss";
+import styles from "@/styles/components/InputCard.module.scss";
 import Image from "next/image";
 import del from "@/public/images/delete.svg";
 import save from "@/public/images/save.svg";
@@ -35,6 +35,7 @@ const initialFormData: JobType = {
   notes: "",
 };
 
+// If the id is undefined, it is a new job and firestore autogenerates it
 function Job({ setIsOpen, id }: Props) {
   const [formData, setFormData] = useState<JobType | DocumentData>(
     initialFormData
@@ -45,7 +46,7 @@ function Job({ setIsOpen, id }: Props) {
   useEffect(() => {
     async function getJob() {
       if (id && user) {
-        const docRef = doc(db, `users/${user.email}/jobs`, id);
+        const docRef = doc(db, `users/${user.uid}/jobs`, id);
         const docSnapshot = await getDoc(docRef);
         if (docSnapshot.exists()) setFormData(docSnapshot.data());
       }
@@ -55,7 +56,13 @@ function Job({ setIsOpen, id }: Props) {
   }, [id, user]);
 
   async function saveJobData() {
-    await toast.promise(saveJob(formData, id, user?.email), {
+    if (user?.email === "demouser@demo.com") {
+      toast.error(
+        "You are using a demo account, you cannot modify example data."
+      );
+      return;
+    }
+    await toast.promise(saveJob(formData, id, user?.uid), {
       loading: "Saving...",
       success: <b>Job saved!</b>,
       error: <b>Could not save, try again.</b>,
@@ -64,8 +71,14 @@ function Job({ setIsOpen, id }: Props) {
   }
 
   async function deleteJob() {
+    if (user?.email === "demouser@demo.com") {
+      toast.error(
+        "You are using a demo account, you cannot modify example data."
+      );
+      return;
+    }
     if (id && user) {
-      await toast.promise(delJob(id, user.email), {
+      await toast.promise(delJob(id, user.uid), {
         loading: "Deleting...",
         success: <b>Job deleted!</b>,
         error: <b>Could not delete try again.</b>,

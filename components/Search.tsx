@@ -10,6 +10,7 @@ import 'regenerator-runtime/runtime'
 
 export default function Search({ globalFilter, setGlobalFilter }) {
   const [value, setValue] = useState(globalFilter);
+  // Debounce the search for the specified amount of time
   const onChange = useAsyncDebounce((value) => {
     setGlobalFilter(value || undefined);
   }, 300);

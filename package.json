@@ -20,17 +20,16 @@
     "hamburger-react": "^2.5.0",
     "next": "13.1.6",
     "react": "18.2.0",
+    "react-clipboard.js": "^2.0.16",
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-hot-toast": "^2.4.0",
     "react-table": "^7.8.0",
     "regenerator-runtime": "^0.13.11",
     "sass": "^1.58.0",
-    "typescript": "4.9.5",
-    "uuid": "^9.0.0"
+    "typescript": "4.9.5"
   },
   "devDependencies": {
-    "@types/react-table": "^7.7.14",
-    "@types/uuid": "^9.0.0"
+    "@types/react-table": "^7.7.14"
   }
 }

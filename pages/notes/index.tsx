@@ -14,6 +14,7 @@ import { NotesListType } from "@/lib/types";
 import { toast, Toaster } from "react-hot-toast";
 import copy from "@/public/images/copy.svg";
 import Head from "next/head";
+import Clipboard from "react-clipboard.js";
 
 export default function Notes() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function Notes() {
   const [addModal, setAddModal] = useState(false);
   const [notes, setNotes] = useState<NotesListType>([]);
   const [editNoteId, setEditNoteId] = useState<string | null>(null);
+  const [loadingNotes, setLoadingNotes] = useState(true);
 
   useEffect(() => {
     if (!user && !loading) router.push("/");
@@ -28,7 +30,8 @@ export default function Notes() {
 
   useEffect(() => {
     async function getUserNotes() {
-      const notesRef = collection(db, `users/${user?.email}/notes`);
+      setLoadingNotes(true);
+      const notesRef = collection(db, `users/${user?.uid}/notes`);
       const notesDoc = await getDocs(notesRef);
       const notes = notesDoc.docs.map((doc) => ({
         ...doc.data(),
@@ -37,6 +40,7 @@ export default function Notes() {
 
       // @ts-ignore
       setNotes(notes);
+      setLoadingNotes(false);
     }
 
     if (user) {
@@ -44,17 +48,9 @@ export default function Notes() {
     }
   }, [user]);
 
-  async function copyToClipboard(
-    event: React.MouseEvent<HTMLButtonElement>,
-    text: string
-  ) {
+  async function stopPropagation(event: React.MouseEvent<HTMLButtonElement>) {
     event.stopPropagation();
-    try {
-      await navigator.clipboard.writeText(text);
-      toast.success("Copied to clipboard!");
-    } catch (err) {
-      toast.error("Failed to copy");
-    }
+    toast.success("Copied to clipboard!");
   }
 
   return (
@@ -63,7 +59,7 @@ export default function Notes() {
         <title>Notes</title>
       </Head>
       <Layout>
-        <div className={styles.notes}>
+        {loadingNotes ? <Loading /> : (<div className={styles.notes}>
           {notes.map((note) => (
             <div
               className={styles.note}
@@ -72,15 +68,18 @@ export default function Notes() {
             >
               <h2>{note.title}</h2>
               <p>{note.content}</p>
-              <button onClick={(event) => copyToClipboard(event, note.content)}>
+              <Clipboard
+                data-clipboard-text={note.content}
+                onClick={stopPropagation}
+              >
                 <Image src={copy} alt="Copy" />
-              </button>
+              </Clipboard>
             </div>
           ))}
           <button className={styles.add} onClick={() => setAddModal(true)}>
             <Image src={plus} alt="Add" />
           </button>
-        </div>
+        </div>)}
       </Layout>
 
       <Toaster />
@@ -96,7 +95,6 @@ export default function Notes() {
         <Note setIsOpen={setAddModal} />
       </Modal>
 
-      {loading && <Loading />}
     </>
   );
 }

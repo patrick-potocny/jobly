@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { signInWithRedirect, GoogleAuthProvider } from 'firebase/auth';
 import { DocumentData, addDoc, collection, deleteDoc, doc, getFirestore, setDoc } from "firebase/firestore";
 import { JobType } from "./types";
 
@@ -24,7 +24,7 @@ const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 async function signInWithGoogle() {
   try {
-    const res = await signInWithPopup(auth, googleProvider);
+    const res = await signInWithRedirect(auth, googleProvider);
   } catch (e) {
     alert('Error signing in with Google \n Please try again');
   }

@@ -9,7 +9,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>Jobly</title>
+        <title>Jobly - Makes job hunting easier</title>
         <meta
           name="description"
           content="Jobly streamlines the job search process by organizing and tracking job postings, interviews, and other relevant information for job seekers."

@@ -24,7 +24,7 @@ export default function Tips() {
       </Head>
       <Layout>
         <article className={styles.article}>
-          <Image src={jobSearch} alt="Guy searching for Job"></Image>
+          <Image src={jobSearch} alt="Guy searching for Job" priority/>
           <h1>Job Search Tips</h1>
           <p>
             Looking for a job can be a daunting and time-consuming process, but
@@ -179,7 +179,6 @@ export default function Tips() {
         </article>
       </Layout>
 
-      {loading && <Loading />}
     </>
   );
 }

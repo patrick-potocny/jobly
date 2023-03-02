@@ -5,27 +5,15 @@ import styles from "@/styles/components/SelectedColumns.module.scss";
 import { motion } from "framer-motion";
 import { ColumnInstance } from "react-table";
 
+type Props = { cols: ColumnInstance<object>[] };
 
 const variants = {
-  open: { opacity: 1, y: 0, display: "flex" },
-  closed: { opacity: 0, y: 50, display: "none" },
+  open: { opacity: 1, y: 0, scale: 1 },
+  closed: { opacity: 0, y: "-80%", scale: 0.01 },
 };
 
-export default function SelectedColumns({cols}: {cols: ColumnInstance<object>[]}) {
+export default function SelectedColumns({ cols }: Props) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [checkedList, setCheckedList] = useState<string[]>([]);
-
-  function handleCheckboxChange(
-    event: React.ChangeEvent<HTMLInputElement>
-  ): void {
-    const { name, checked } = event.target;
-
-    if (checked) {
-      setCheckedList([...checkedList, name]);
-    } else {
-      setCheckedList(checkedList.filter((value: string) => value !== name));
-    }
-  }
 
   return (
     <div className={styles.selectedColumns}>
@@ -41,15 +29,15 @@ export default function SelectedColumns({cols}: {cols: ColumnInstance<object>[]}
         className={styles.selection}
       >
         {cols.map((col) => {
-          if (col.Header === "") return
+          if (col.Header === "") return;
           return (
-          <div className={styles.col} key={col.id}>
-            <label>
-            <input type="checkbox" {...col.getToggleHiddenProps()}/>
-            {` ${col.Header}`}
-            </label>
-          </div>
-          )
+            <div className={styles.col} key={col.id}>
+              <label>
+                <input type="checkbox" {...col.getToggleHiddenProps()} />
+                {` ${col.Header}`}
+              </label>
+            </div>
+          );
         })}
       </motion.div>
     </div>

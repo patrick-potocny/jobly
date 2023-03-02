@@ -21,17 +21,20 @@ import SelectedColumns from "@/components/SelectedColumns";
 import Modal from "@/components/Modal";
 import Job from "@/components/Job";
 import NoneFound from "@/components/NoneFound";
+import Loading from "./Loading";
 
 export default function Table() {
   const [jobs, setJobs] = useState([]);
-  const [noJobs, setNoJobs] = useState(true);
+  const [noJobs, setNoJobs] = useState(false);
   const [user] = useAuthState(auth);
   const [addModal, setAddModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
       async function getUserJobs() {
-        const jobsRef = collection(db, `users/${user.email}/jobs`);
+        setLoading(true);
+        const jobsRef = collection(db, `users/${user.uid}/jobs`);
         const jobsDoc = await getDocs(jobsRef);
         const processedJobs = processJobs(
           jobsDoc.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
@@ -40,6 +43,7 @@ export default function Table() {
         if (processedJobs.length === 0) setNoJobs(true);
 
         setJobs(processedJobs);
+        setLoading(false);
       }
 
       getUserJobs();
@@ -129,7 +133,7 @@ export default function Table() {
   } = tableInstance;
 
   return (
-    <>
+    <div className={styles.wrapper}>
       <div className={styles.controls}>
         <Search
           setGlobalFilter={setGlobalFilter}
@@ -143,8 +147,10 @@ export default function Table() {
         </div>
       </div>
       {noJobs ? (
-        <NoneFound>No jobs found, <br /> press the + Add Job button ➚</NoneFound>
-      ) : (
+        <NoneFound>
+          No jobs found, <br /> press the + Add Job button ➚
+        </NoneFound>
+      ) : loading ? <Loading /> : (
         <div className={styles.tableWrapper}>
           <table {...getTableProps()} className={styles.table}>
             <thead>
@@ -183,6 +189,6 @@ export default function Table() {
       <Modal isOpen={addModal} setIsOpen={setAddModal}>
         <Job setIsOpen={setAddModal} />
       </Modal>
-    </>
+    </div>
   );
 }
