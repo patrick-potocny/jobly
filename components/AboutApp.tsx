@@ -8,10 +8,9 @@ export default function AboutApp() {
   function scrollToBottom() {
     window.scrollTo({
       top: document.body.scrollHeight,
-      behavior: 'smooth',
+      behavior: "smooth",
     });
-  };
-
+  }
 
   return (
     <div className={styles.aboutAppDiv}>
@@ -19,7 +18,7 @@ export default function AboutApp() {
         <motion.div
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: .6, delay: 0.3, type: "spring" }}
+          transition={{ duration: 0.6, delay: 0.3, type: "spring" }}
         >
           <h1>Make job hunting easier</h1>
         </motion.div>
@@ -28,29 +27,35 @@ export default function AboutApp() {
         <motion.div
           initial={{ y: "140%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: .6, delay: .8, type: "spring" }}
+          transition={{ duration: 0.6, delay: 0.8, type: "spring" }}
         >
           <p>
             Jobly helps job seekers stay organized by tracking their job search.
             From reviewing postings to scheduling interviews, Jobly helps users
-            to organize all necessary information.
+            to organize all necessary information. Experience the ease of
+            organizing your job search process with Jobly and take your job
+            search to the next level!
           </p>
         </motion.div>
       </div>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: .6, delay: 1.3, type: "spring" }}
-        >
-          <button onClick={scrollToBottom}>Get Started</button>
-        </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 1.3, type: "spring" }}
+      >
+        <button onClick={scrollToBottom}>Get Started</button>
+      </motion.div>
       <div className={styles.wrapper}>
         <motion.div
           initial={{ y: "100%", opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: .6, delay: 1.2, type: "spring" }}
+          transition={{ duration: 0.6, delay: 1.2, type: "spring" }}
         >
-          <Image src={screenshots} alt="Screenshots from the app" priority={true}/>
+          <Image
+            src={screenshots}
+            alt="Screenshots from the app"
+            priority={true}
+          />
         </motion.div>
       </div>
     </div>

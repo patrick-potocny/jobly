@@ -29,6 +29,7 @@ export default function Notes() {
   }, [user, router, loading]);
 
   useEffect(() => {
+    // TODO: Error handling
     async function getUserNotes() {
       setLoadingNotes(true);
       const notesRef = collection(db, `users/${user?.uid}/notes`);

@@ -31,6 +31,7 @@ export default function Table() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // TODO: Error handling
     if (user) {
       async function getUserJobs() {
         setLoading(true);
