@@ -1,12 +1,12 @@
-<a  href="https://jobly-henna.vercel.app/">
+<a  href="https://www.joblyapp.net/">
 <img  src="https://user-images.githubusercontent.com/67468836/222377814-0d3c41d5-90bb-4d9f-9c41-0621e25e28e0.png"  alt="Jobly logo"  title="Jobly"  align="right"  height="60"  />
 </a>
 
 # Jobly
 
-<p align="center"><a href="https://jobly-henna.vercel.app/">Jobly</a> streamlines the job search process by organizing and tracking job postings, interviews, and other relevant information for job seekers.</p>
+<p align="center"><a href="https://www.joblyapp.net/">Jobly</a> streamlines the job search process by organizing and tracking job postings, interviews, and other relevant information for job seekers.</p>
 
-<p align="center">&#128073 <a href="https://jobly-henna.vercel.app/">Live Site </a>&#128072</p>
+<p align="center">&#128073 <a href="https://www.joblyapp.net/">Live Site </a>&#128072</p>
 
 ---
 
