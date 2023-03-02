@@ -48,7 +48,6 @@ function Note({ setIsOpen, id }: Props) {
       toast.error('You are using a demo account, you cannot modify example data.')
       return
     }
-    if (user?.email === 'demo')
     await toast.promise(saveNote(formData, id, user?.uid), {
       loading: "Saving...",
       success: <b>Note saved!</b>,
@@ -62,7 +61,6 @@ function Note({ setIsOpen, id }: Props) {
       toast.error('You are using a demo account, you cannot modify example data.')
       return
     }
-    if (user?.email === 'demo')
     if (id && user) {
       await toast.promise(delNote(id, user.uid), {
         loading: "Deleting...",

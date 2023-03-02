@@ -70,6 +70,7 @@ async function delJob(jobId: string, userEmail: string | undefined | null) {
 
 // Save note to db
 async function saveNote(note: JobType | DocumentData, noteId: string | undefined, userEmail: string | undefined | null) {
+  console.log(note, noteId, userEmail)
   if (noteId && userEmail) {
     try {
       await setDoc(doc(db, `users/${userEmail}/notes`, noteId), note);
