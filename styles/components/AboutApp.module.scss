@@ -7,15 +7,10 @@
   gap: 2em;
   color: $clr-text;
 
-  .wrapper {
-    height: auto;
-    overflow: hidden;
-  }
-
   h1 {
     font-size: 4.5em;
     font-weight: 900;
-    line-height: 1.2;
+    line-height: 1.1;
     background: linear-gradient(264.74deg, #3A0CA3 38.24%, #03045E 89.62%);
     background-clip: text;
     color: transparent;
@@ -31,7 +26,8 @@
 
   button {
     color: $clr-text;
-    width: 100%;
+    width: 15em;
+    margin: 0 auto;
     padding: 0.7em;
     font-size: 1.5em;
     font-weight: 600;

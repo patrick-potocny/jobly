@@ -8,6 +8,9 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
 import { auth } from "@/lib/firebase";
 import { useEffect } from "react";
+import { Dosis } from "@next/font/google";
+
+const inter = Dosis({ subsets: ["latin"] });
 
 export default function LandingPage() {
   const [user] = useAuthState(auth);
@@ -18,7 +21,7 @@ export default function LandingPage() {
   }, [user, router]);
 
   return (
-    <>
+    <div className={inter.className}>
       <div className={styles.container}>
         <Image
           className={styles.logo}
@@ -29,10 +32,10 @@ export default function LandingPage() {
         <main className={styles.main}>
           <motion.div
             className={styles.signInDiv}
-            initial={{ x: -500, scale: 0.2, opacity: 0 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{
-              delay: 1,
+              delay: 1.6,
               duration: 1,
               type: "spring",
               stiffness: 50,
@@ -45,6 +48,6 @@ export default function LandingPage() {
           </div>
         </main>
       </div>
-    </>
+    </div>
   );
 }
