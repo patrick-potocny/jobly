@@ -10,6 +10,9 @@
 * {
   margin: 0;
   padding: 0;
+}
+
+*:not(html):not(body) {
   font: inherit;
 }
 
