@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logo from "@/public/images/logo.png";
 import styles from "@/styles/pages/LandingPage.module.scss";
-import SignInCard from "@/components/SignInCard";
+import SignInCards from "@/components/SignInCards";
 import AboutApp from "@/components/AboutApp";
 import { motion } from "framer-motion";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -41,7 +41,7 @@ export default function LandingPage() {
               stiffness: 50,
             }}
           >
-            <SignInCard />
+            <SignInCards />
           </motion.div>
           <div className={styles.aboutAppDiv}>
             <AboutApp />

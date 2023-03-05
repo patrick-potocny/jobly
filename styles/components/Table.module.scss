@@ -27,8 +27,7 @@
       border-radius: .6em 3em .6em .6em;
       
       @include btn-hover {
-        background-color: lighten($clr-add-btn, 10%);
-        scale: 1.05;
+        background-color: lighten($clr-add-btn, 20%);
       }
 
       span {

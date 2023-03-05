@@ -30,3 +30,5 @@ export type CompanyType = {
   companyName: string;
   companyWebsite: string;
 }
+
+export type SignInCardProps = { setComponentToShow: (component: string) => void }
