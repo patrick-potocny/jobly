@@ -59,5 +59,5 @@ To style the app, I utilized [SCSS](https://sass-lang.com/) modules for each com
 
 ### Upcoming Features
 - [x] ~~Job search Tips~~
-- [ ] More Sign in Options
+- [x] ~~More Sign in Options~~
 - [ ] **AI** powered Resume/Cover letter builder
