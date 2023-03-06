@@ -10,7 +10,7 @@ import { auth } from "@/lib/firebase";
 import { useEffect } from "react";
 import { Dosis } from "@next/font/google";
 
-const inter = Dosis({ subsets: ["latin"] });
+const inter = Dosis({ subsets: ["latin"], display: "swap" });
 
 export default function LandingPage() {
   const [user] = useAuthState(auth);
@@ -23,12 +23,7 @@ export default function LandingPage() {
   return (
     <div className={inter.className}>
       <div className={styles.container}>
-        <Image
-          className={styles.logo}
-          src={logo}
-          alt="Jobly Logo"
-          priority
-        />
+        <Image className={styles.logo} src={logo} alt="Jobly Logo" priority />
         <main className={styles.main}>
           <motion.div
             className={styles.signInDiv}

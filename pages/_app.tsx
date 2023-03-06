@@ -3,7 +3,7 @@ import Head from "next/head";
 import "@/styles/global.scss";
 import { Inter } from "@next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], display: "swap" });
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
