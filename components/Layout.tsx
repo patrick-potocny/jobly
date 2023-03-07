@@ -36,7 +36,7 @@ function Layout({ children }: Props) {
           </ul>
         </nav>
         <button className={styles.signOut} onClick={() => auth.signOut()}>
-          <Image src={signOut} alt="Sign out icon" /> Sign Out
+          <Image src={signOut} alt="Log out icon" /> Log Out
         </button>
         <BurgerMenu />
       </header>

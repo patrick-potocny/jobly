@@ -46,7 +46,7 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
       <button className={styles.btn} onClick={() => signInWithGoogle()}>
         <div>
           <Image src={googleIcon} alt="google icon" />
-          <span>Log In with Google</span>
+          <span>Sign In with Google</span>
         </div>
       </button>
       <div className={styles.divider}>

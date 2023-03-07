@@ -22,7 +22,7 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
         .required("Password is Required")
         .min(8, "Password must be at least 8 characters long"),
       secondPassword: Yup.string()
-        .required("Password is Required")
+        .required("Confirm Password is Required")
         .oneOf([Yup.ref("password")], "Passwords must match"),
     }),
     onSubmit: (values) => {

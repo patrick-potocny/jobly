@@ -71,7 +71,7 @@ export default function BurgerMenu() {
           </motion.li>
           <motion.li variants={itemVariants}>
             <button className={styles.signOut} onClick={() => auth.signOut()}>
-              <Image src={signOut} alt="Sign out icon" /> Sign Out
+              <Image src={signOut} alt="Sign out icon" /> Log Out
             </button>
           </motion.li>
         </motion.ul>
