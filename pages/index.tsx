@@ -10,7 +10,7 @@ import { auth } from "@/lib/firebase";
 import { useEffect } from "react";
 import { Dosis } from "@next/font/google";
 
-const inter = Dosis({ subsets: ["latin"], display: "swap" });
+const dosis = Dosis({ subsets: ["latin"], display: "swap" });
 
 export default function LandingPage() {
   const [user] = useAuthState(auth);
@@ -21,7 +21,7 @@ export default function LandingPage() {
   }, [user, router]);
 
   return (
-    <div className={inter.className}>
+    <div className={dosis.className}>
       <div className={styles.container}>
         <Image className={styles.logo} src={logo} alt="Jobly Logo" priority />
         <main className={styles.main}>

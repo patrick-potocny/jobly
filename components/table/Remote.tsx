@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from '@/styles/components/table/Remote.module.scss'
 
 export default function Remote({ value }: { value: string }) {
-  const [color, setColor] = useState(styles.red)
+  const [color, setColor] = useState(styles.remote)
 
   useEffect(() => {
     if (value === 'Remote') setColor(styles.remote)
