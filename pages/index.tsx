@@ -25,6 +25,9 @@ export default function LandingPage() {
       <div className={styles.container}>
         <Image className={styles.logo} src={logo} alt="Jobly Logo" priority />
         <main className={styles.main}>
+          <div className={styles.aboutAppDiv}>
+            <AboutApp />
+          </div>
           <motion.div
             className={styles.signInDiv}
             initial={{ y: 20, opacity: 0 }}
@@ -38,9 +41,6 @@ export default function LandingPage() {
           >
             <SignInCards />
           </motion.div>
-          <div className={styles.aboutAppDiv}>
-            <AboutApp />
-          </div>
         </main>
       </div>
     </div>
