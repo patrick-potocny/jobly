@@ -1,13 +1,13 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import styles from "@/styles/components/InputCard.module.scss";
-import Image from "next/image";
-import del from "@/public/images/delete.svg";
-import save from "@/public/images/save.svg";
-import { JobType } from "@/lib/types";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
-import { auth, db, delJob, saveJob } from "@/lib/firebase";
+import Image from "next/image";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast, Toaster } from "react-hot-toast";
+import styles from "@/styles/components/Job.module.scss";
+import { JobType } from "@/lib/types";
+import { auth, db, delJob, saveJob } from "@/lib/firebase";
+import del from "@/public/images/delete.svg";
+import save from "@/public/images/save.svg";
 
 type EventType =
   | ChangeEvent<HTMLInputElement>
@@ -218,7 +218,7 @@ function Job({ setIsOpen, id }: Props) {
           onChange={handleChange}
         ></textarea>
       </form>
-      <div className={styles.btns}>
+      <div className={styles.actionButtons}>
         <button className={styles.delete} onClick={deleteJob}>
           <Image src={del} alt="Thrash" /> <span>Delete</span>
         </button>

@@ -1,6 +1,6 @@
+import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import styles from "@/styles/components/Modal.module.scss";
-import React from "react";
 
 type Props = {
   isOpen: boolean;

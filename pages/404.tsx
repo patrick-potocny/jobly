@@ -1,6 +1,6 @@
 import React from 'react'
-import styles from '@/styles/pages/404.module.scss'
 import { useRouter } from 'next/router';
+import styles from '@/styles/pages/404.module.scss'
 
 export default function NotFound() {
   const router = useRouter();

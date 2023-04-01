@@ -1,13 +1,13 @@
 import React, { useState, ChangeEvent, useEffect } from "react";
-import styles from "@/styles/components/InputCard.module.scss";
 import Image from "next/image";
-import del from "@/public/images/delete.svg";
-import save from "@/public/images/save.svg";
-import { NoteType } from "@/lib/types";
 import { DocumentData, doc, getDoc } from "firebase/firestore";
-import { auth, db, delNote, saveNote } from "@/lib/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast, Toaster } from "react-hot-toast";
+import styles from "@/styles/components/Job.module.scss";
+import { NoteType } from "@/lib/types";
+import { auth, db, delNote, saveNote } from "@/lib/firebase";
+import del from "@/public/images/delete.svg";
+import save from "@/public/images/save.svg";
 
 type EventType =
   | ChangeEvent<HTMLInputElement>
@@ -103,7 +103,7 @@ function Note({ setIsOpen, id }: Props) {
           onChange={handleChange}
         ></textarea>
       </form>
-      <div className={styles.btns}>
+      <div className={styles.actionButtons}>
         <button className={styles.delete} onClick={deleteNote}>
           <Image src={del} alt="Thrash" /> <span>Delete</span>
         </button>

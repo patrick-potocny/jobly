@@ -1,13 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import googleIcon from "@/public/images/google-icon.svg";
-import styles from "@/styles/components/SignInCard.module.scss";
-import { SignInDemoUser, signInWithGoogle } from "@/lib/firebase";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { auth } from "@/lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import styles from "@/styles/components/SignInCard.module.scss";
+import { SignInDemoUser, signInWithGoogle, auth } from "@/lib/firebase";
 import { SignInCardProps } from "@/lib/types";
+import googleIcon from "@/public/images/google-icon.svg";
 
 export default function LogInCard({ setComponentToShow }: SignInCardProps) {
   const [error, setError] = React.useState<string | null>(null);

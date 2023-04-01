@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "@/styles/components/SignInCard.module.scss";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { auth } from "@/lib/firebase";
 import { sendPasswordResetEmail } from "firebase/auth";
+import styles from "@/styles/components/SignInCard.module.scss";
+import { auth } from "@/lib/firebase";
 import { SignInCardProps } from "@/lib/types";
 
 export default function LogInCard({ setComponentToShow }: SignInCardProps) {

@@ -7,7 +7,7 @@
   width: min(40em, 95vw);
   background-color: $clr-white;
   border-radius: 2em;
-  padding: .25em;
+  padding: 0.25em;
   display: flex;
   flex-direction: column;
 
@@ -27,7 +27,7 @@
 
   .inputs {
     height: 100%;
-    padding: .1em 2em 2em;
+    padding: 0.1em 2em 2em;
     display: flex;
     flex-direction: column;
     gap: 1px;
@@ -40,8 +40,8 @@
     textarea,
     select {
       border: none;
-      border-radius: .4em;
-      padding-block: .3em;
+      border-radius: 0.4em;
+      padding-block: 0.3em;
 
       &:focus {
         outline: 1px solid rgba(black, 0.3);
@@ -66,13 +66,14 @@
     }
 
     select {
-      padding-inline: .5em;
-      margin-block: .5em;
+      padding-inline: 0.5em;
+      margin-block: 0.5em;
       width: fit-content;
       font-weight: 500;
     }
 
-    select[name="fit"], select[name="progress"] {
+    select[name="fit"],
+    select[name="progress"] {
       margin-block: 1.5em;
     }
 
@@ -80,7 +81,7 @@
       resize: none;
       min-height: 15em;
       height: 30em;
-      padding-inline: .5em;
+      padding-inline: 0.5em;
       overflow-x: hidden;
       overflow-y: auto;
 
@@ -88,12 +89,13 @@
     }
   }
 
-  .btns {
+  .actionButtons {
     display: flex;
     justify-content: space-between;
     margin-top: 1em;
 
-    button {
+    .delete,
+    .save {
       display: flex;
       justify-content: center;
       align-items: center;

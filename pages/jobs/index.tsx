@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import Head from "next/head";
 import { auth } from "@/lib/firebase";
 import Layout from "@/components/Layout";
 import Table from "@/components/Table";
-import Head from "next/head";
 
 export default function Jobs() {
   const router = useRouter();

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import LogInCard from "@/components/LogInCard";
 import { AnimatePresence } from "framer-motion";
-import SignUpCard from "./SignUpCard";
 import { motion } from "framer-motion";
-import ResetPasswordCard from "./ResetPasswordCard";
+import SignUpCard from "@/components/SignUpCard";
+import LogInCard from "@/components/LogInCard";
+import ResetPasswordCard from "@/components/ResetPasswordCard";
 
 export default function SignInCards() {
   const [componentToShow, setComponentToShow] = useState("login");

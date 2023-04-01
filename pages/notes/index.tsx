@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import { collection, getDocs } from "firebase/firestore";
+import Image from "next/image";
+import Head from "next/head";
+import { toast, Toaster } from "react-hot-toast";
+import Clipboard from "react-clipboard.js";
+import styles from "@/styles/pages/Notes.module.scss";
 import { auth, db } from "@/lib/firebase";
 import Layout from "@/components/Layout";
 import Loading from "@/components/Loading";
-import { collection, getDocs } from "firebase/firestore";
-import Image from "next/image";
-import plus from "@/public/images/plus.svg";
-import styles from "@/styles/pages/Notes.module.scss";
 import Modal from "@/components/Modal";
 import Note from "@/components/Note";
 import { NotesListType } from "@/lib/types";
-import { toast, Toaster } from "react-hot-toast";
+import plus from "@/public/images/plus.svg";
 import copy from "@/public/images/copy.svg";
-import Head from "next/head";
-import Clipboard from "react-clipboard.js";
 
 export default function Notes() {
   const router = useRouter();
@@ -60,27 +60,32 @@ export default function Notes() {
         <title>Notes</title>
       </Head>
       <Layout>
-        {loadingNotes ? <Loading /> : (<div className={styles.notes}>
-          {notes.map((note) => (
-            <div
-              className={styles.note}
-              key={note.id}
-              onClick={() => setEditNoteId(note.id)}
-            >
-              <h2>{note.title}</h2>
-              <p>{note.content}</p>
-              <Clipboard
-                data-clipboard-text={note.content}
-                onClick={stopPropagation}
+        {loadingNotes ? (
+          <Loading />
+        ) : (
+          <div className={styles.notes}>
+            {notes.map((note) => (
+              <div
+                className={styles.note}
+                key={note.id}
+                onClick={() => setEditNoteId(note.id)}
               >
-                <Image src={copy} alt="Copy" />
-              </Clipboard>
-            </div>
-          ))}
-          <button className={styles.add} onClick={() => setAddModal(true)}>
-            <Image src={plus} alt="Add" />
-          </button>
-        </div>)}
+                <h2 className={styles.title}>{note.title}</h2>
+                <p className={styles.content}>{note.content}</p>
+                <Clipboard
+                  data-clipboard-text={note.content}
+                  onClick={stopPropagation}
+                  className={styles.copyButton}
+                >
+                  <Image src={copy} alt="Copy" />
+                </Clipboard>
+              </div>
+            ))}
+            <button className={styles.add} onClick={() => setAddModal(true)}>
+              <Image src={plus} alt="Add" />
+            </button>
+          </div>
+        )}
       </Layout>
 
       <Toaster />
@@ -95,7 +100,6 @@ export default function Notes() {
       <Modal isOpen={addModal} setIsOpen={setAddModal}>
         <Note setIsOpen={setAddModal} />
       </Modal>
-
     </>
   );
 }

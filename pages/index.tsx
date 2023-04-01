@@ -1,14 +1,14 @@
+import { useEffect } from "react";
 import Image from "next/image";
-import logo from "@/public/images/logo.png";
-import styles from "@/styles/pages/LandingPage.module.scss";
-import SignInCards from "@/components/SignInCards";
-import AboutApp from "@/components/AboutApp";
 import { motion } from "framer-motion";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import styles from "@/styles/pages/LandingPage.module.scss";
+import SignInCards from "@/components/SignInCards";
+import AboutApp from "@/components/AboutApp";
 import { auth } from "@/lib/firebase";
-import { useEffect } from "react";
 import { Dosis } from "@next/font/google";
+import logo from "@/public/images/logo.png";
 
 const dosis = Dosis({ subsets: ["latin"], display: "swap" });
 

@@ -34,7 +34,6 @@ async function signInWithGoogle() {
 async function SignInDemoUser() {
   try {
     await signInWithEmailAndPassword(auth, "demouser@demo.com", "demouser123");
-    // handle successful login
   } catch (e) {
     alert('Error signing in with Demo User \n Please try again');
   }

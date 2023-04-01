@@ -25,20 +25,20 @@
     overflow: hidden;
     position: relative;
 
-    h2 {
+    .title {
       font-size: 1.25em;
       font-weight: 600;
       margin-bottom: 0.5em;
     }
 
-    p {
+    .content {
       display: -webkit-box;
       -webkit-line-clamp: 5;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
-    button {
+    .copyButton {
       position: absolute;
       bottom: -2px;
       right: -2px;

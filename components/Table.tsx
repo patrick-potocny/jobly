@@ -2,16 +2,16 @@
 /* eslint-disable */
 // @ts-nocheck
 import React, { useEffect, useMemo, useState } from "react";
-import { auth, db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useGlobalFilter, useSortBy, useTable } from "react-table";
+import Image from "next/image";
+import styles from "@/styles/components/Table.module.scss";
+import { auth, db } from "@/lib/firebase";
 import { processJobs } from "@/lib/utils";
 import { CompanyType } from "@/lib/types";
-import { useGlobalFilter, useSortBy, useTable } from "react-table";
 import EditJob from "@/components/table/EditJob";
-import styles from "@/styles/components/Table.module.scss";
 import Remote from "@/components/table/Remote";
-import Image from "next/image";
 import linkIcon from "@/public/images/link.svg";
 import Fit from "@/components/table/Fit";
 import Progress from "@/components/table/Progress";
@@ -21,7 +21,7 @@ import SelectedColumns from "@/components/SelectedColumns";
 import Modal from "@/components/Modal";
 import Job from "@/components/Job";
 import NoneFound from "@/components/NoneFound";
-import Loading from "./Loading";
+import Loading from "@/components/Loading";
 
 export default function Table() {
   const [jobs, setJobs] = useState([]);

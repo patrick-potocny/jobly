@@ -1,12 +1,12 @@
-@import '@/styles/colors';
-@import '@/styles/mixins';
+@import "@/styles/colors";
+@import "@/styles/mixins";
 
 .article {
   width: min(50em, 95vw);
   height: 100%;
   overflow: auto;
   margin: 0 auto;
-  padding-inline: 1em; 
+  padding-inline: 1em;
   color: $clr-text;
 
   @include custom-scrollbar($clr-bg-200);
@@ -21,7 +21,7 @@
     text-align: center;
     font-size: 3em;
     font-weight: 800;
-    margin-top: -.8em;
+    margin-top: -0.8em;
   }
 
   h2 {
@@ -33,7 +33,6 @@
   p {
     font-size: 1.25em;
     margin-block: 1em;
-
   }
 
   a {

@@ -1,12 +1,11 @@
 // Disabling ts-check because react-table types are not up to date
 // @ts-nocheck
-
 import React, { useState } from "react";
 import Image from "next/image";
-import magnifyingGlass from "@/public/images/magnifying-glass.svg";
-import styles from "@/styles/components/Search.module.scss";
-import { useAsyncDebounce } from "react-table";
 import 'regenerator-runtime/runtime'
+import { useAsyncDebounce } from "react-table";
+import styles from "@/styles/components/Search.module.scss";
+import magnifyingGlass from "@/public/images/magnifying-glass.svg";
 
 export default function Search({ globalFilter, setGlobalFilter }) {
   const [value, setValue] = useState(globalFilter);

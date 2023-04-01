@@ -1,11 +1,5 @@
-@import '@/styles/colors';
-@import '@/styles/mixins';
-
-.burgerMenu {
-  @media (min-width: 38em) {
-    display: none;
-  }
-}
+@import "@/styles/colors";
+@import "@/styles/mixins";
 
 .menu {
   z-index: 100;
@@ -14,10 +8,15 @@
   left: 0;
   width: 100vw;
   padding-block: 1em;
-  background: linear-gradient(180deg, #beecf7 0.64%, #4CC9F0 64.72%, #4361EE 120.89%);
+  background: linear-gradient(
+    180deg,
+    #beecf7 0.64%,
+    #4cc9f0 64.72%,
+    #4361ee 120.89%
+  );
   border-radius: 0 0 1em 1em;
 
-  ul {
+  .menuItems {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,23 +31,28 @@
         scale: 1.1;
         font-weight: 600;
       }
-      
+
       &:last-child {
         margin-top: 1em;
       }
-      
+    }
+
+    .signOut {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      color: $clr-text;
+
+      @include btn-hover {
+        scale: 1.1;
+        font-weight: 600;
+      }
     }
   }
 }
 
-.signOut {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  color: $clr-text;
-
-  @include btn-hover {
-    scale: 1.1;
-    font-weight: 600;
+@media (min-width: 38em) {
+  .burgerMenu {
+    display: none;
   }
 }

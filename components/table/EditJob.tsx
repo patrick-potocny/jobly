@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import expand from "@/public/images/expand.svg";
 import Image from "next/image";
 import styles from "@/styles/components/table/EditJob.module.scss";
 import Modal from "@/components/Modal";
 import Job from "@/components/Job";
+import expand from "@/public/images/expand.svg";
 
 export default function EditJob({ id }: { id: string }) {
   const [editModal, setEditModal] = useState(false);

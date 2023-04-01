@@ -1,13 +1,12 @@
 import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/router";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "@/styles/pages/Tips.module.scss";
 import { auth } from "@/lib/firebase";
 import Layout from "@/components/Layout";
-import Loading from "@/components/Loading";
-import styles from "@/styles/pages/Tips.module.scss";
-import Image from "next/image";
 import jobSearch from "@/public/images/job-search.png";
-import Head from "next/head";
 
 export default function Tips() {
   const router = useRouter();
@@ -24,7 +23,7 @@ export default function Tips() {
       </Head>
       <Layout>
         <article className={styles.article}>
-          <Image src={jobSearch} alt="Guy searching for Job" priority/>
+          <Image src={jobSearch} alt="Guy searching for Job" priority />
           <h1>Job Search Tips</h1>
           <p>
             Looking for a job can be a daunting and time-consuming process, but
@@ -178,7 +177,6 @@ export default function Tips() {
           </ul>
         </article>
       </Layout>
-
     </>
   );
 }

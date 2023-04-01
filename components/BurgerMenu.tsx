@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Hamburger from "hamburger-react";
-import styles from "@/styles/components/BurgerMenu.module.scss";
 import Link from "next/link";
 import Image from "next/image";
+import { motion, Variants } from "framer-motion";
+import styles from "@/styles/components/BurgerMenu.module.scss";
 import { auth } from "@/lib/firebase";
 import signOut from "@/public/images/sign-out.svg";
-import { motion, Variants } from "framer-motion";
 
 const variants: Variants = {
   open: { opacity: 1, y: 0 },
@@ -59,7 +59,7 @@ export default function BurgerMenu() {
         variants={variants}
         className={styles.menu}
       >
-        <motion.ul variants={listVariants}>
+        <motion.ul className={styles.menuItems} variants={listVariants}>
           <motion.li variants={itemVariants}>
             <Link href="/jobs">Jobs</Link>
           </motion.li>

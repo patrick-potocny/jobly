@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import columns from "@/public/images/columns.svg";
-import styles from "@/styles/components/SelectedColumns.module.scss";
 import { motion } from "framer-motion";
 import { ColumnInstance } from "react-table";
+import styles from "@/styles/components/SelectedColumns.module.scss";
+import columns from "@/public/images/columns.svg";
 
 type Props = { cols: ColumnInstance<object>[] };
 
@@ -13,7 +13,7 @@ const variants = {
 };
 
 export default function SelectedColumns({ cols }: Props) {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className={styles.selectedColumns}>
