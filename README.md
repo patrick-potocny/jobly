@@ -2,7 +2,7 @@
 <img  src="https://user-images.githubusercontent.com/67468836/222377814-0d3c41d5-90bb-4d9f-9c41-0621e25e28e0.png"  alt="Jobly logo"  title="Jobly"  align="right"  height="60"  />
 </a>
 
-# Jobly
+# Jobly (WIP)
 
 <p align="center"><a target="_blank" href="https://www.joblyapp.net/">Jobly</a> streamlines the job search process by organizing and tracking job postings, interviews, and other relevant information for job seekers.</p>
 
