@@ -1,19 +1,10 @@
-import React, { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
+import React from "react";
 import Head from "next/head";
-import { auth } from "@/lib/firebase";
 import Layout from "@/components/Layout";
 import Table from "@/components/Table";
+import withAuth from "@/hoc/withAuth";
 
-export default function Jobs() {
-  const router = useRouter();
-  const [user, loading] = useAuthState(auth);
-
-  useEffect(() => {
-    if (!user && !loading) router.push("/");
-  }, [user, router, loading]);
-
+function Jobs() {
   return (
     <>
       <Head>
@@ -25,3 +16,5 @@ export default function Jobs() {
     </>
   );
 }
+
+export default withAuth(Jobs);

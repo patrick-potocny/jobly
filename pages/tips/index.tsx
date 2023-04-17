@@ -1,21 +1,12 @@
-import React, { useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
+import React from "react";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "@/styles/pages/Tips.module.scss";
-import { auth } from "@/lib/firebase";
 import Layout from "@/components/Layout";
+import withAuth from "@/hoc/withAuth";
 import jobSearch from "@/public/images/job-search.png";
 
-export default function Tips() {
-  const router = useRouter();
-  const [user, loading] = useAuthState(auth);
-
-  useEffect(() => {
-    if (!user && !loading) router.push("/");
-  }, [user, router, loading]);
-
+function Tips() {
   return (
     <>
       <Head>
@@ -180,3 +171,5 @@ export default function Tips() {
     </>
   );
 }
+
+export default withAuth(Tips);

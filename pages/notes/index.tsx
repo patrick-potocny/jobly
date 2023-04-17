@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/router";
 import { collection, getDocs } from "firebase/firestore";
 import Image from "next/image";
 import Head from "next/head";
@@ -13,20 +12,16 @@ import Loading from "@/components/Loading";
 import Modal from "@/components/Modal";
 import Note from "@/components/Note";
 import { NotesListType } from "@/lib/types";
+import withAuth from "@/hoc/withAuth";
 import plus from "@/public/images/plus.svg";
 import copy from "@/public/images/copy.svg";
 
-export default function Notes() {
-  const router = useRouter();
-  const [user, loading] = useAuthState(auth);
+function Notes() {
+  const [user] = useAuthState(auth);
   const [addModal, setAddModal] = useState(false);
   const [notes, setNotes] = useState<NotesListType>([]);
   const [editNoteId, setEditNoteId] = useState<string | null>(null);
   const [loadingNotes, setLoadingNotes] = useState(true);
-
-  useEffect(() => {
-    if (!user && !loading) router.push("/");
-  }, [user, router, loading]);
 
   useEffect(() => {
     // TODO: Error handling
@@ -103,3 +98,5 @@ export default function Notes() {
     </>
   );
 }
+
+export default withAuth(Notes);
