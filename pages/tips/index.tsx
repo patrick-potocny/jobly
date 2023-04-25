@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import Image from "next/image";
-import styles from "@/styles/pages/Tips.module.scss";
-import Layout from "@/components/Layout";
+import styles from "./Tips.module.scss";
+import AppLayout from "@/components/layout/AppLayout";
 import withAuth from "@/hoc/withAuth";
 import jobSearch from "@/public/images/job-search.png";
 
@@ -12,7 +12,7 @@ function Tips() {
       <Head>
         <title>Tips</title>
       </Head>
-      <Layout>
+      <AppLayout>
         <article className={styles.article}>
           <Image src={jobSearch} alt="Guy searching for Job" priority />
           <h1>Job Search Tips</h1>
@@ -167,7 +167,7 @@ function Tips() {
             </li>
           </ul>
         </article>
-      </Layout>
+      </AppLayout>
     </>
   );
 }

@@ -5,12 +5,12 @@ import Image from "next/image";
 import Head from "next/head";
 import { toast, Toaster } from "react-hot-toast";
 import Clipboard from "react-clipboard.js";
-import styles from "@/styles/pages/Notes.module.scss";
+import styles from "./Notes.module.scss";
 import { auth, db } from "@/lib/firebase";
-import Layout from "@/components/Layout";
-import Loading from "@/components/Loading";
-import Modal from "@/components/Modal";
-import Note from "@/components/Note";
+import AppLayout from "@/components/layout/AppLayout";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import Modal from "@/components/common/Modal";
+import Note from "@/components/common/Note";
 import { NotesListType } from "@/lib/types";
 import withAuth from "@/hoc/withAuth";
 import plus from "@/public/images/plus.svg";
@@ -54,9 +54,9 @@ function Notes() {
       <Head>
         <title>Notes</title>
       </Head>
-      <Layout>
+      <AppLayout>
         {loadingNotes ? (
-          <Loading />
+          <LoadingSpinner />
         ) : (
           <div className={styles.notes}>
             {notes.map((note) => (
@@ -81,7 +81,7 @@ function Notes() {
             </button>
           </div>
         )}
-      </Layout>
+      </AppLayout>
 
       <Toaster />
 
