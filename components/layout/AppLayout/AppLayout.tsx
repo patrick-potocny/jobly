@@ -6,13 +6,16 @@ import styles from "./AppLayout.module.scss";
 import { auth } from "@/lib/firebase";
 import BurgerMenu from "../BurgerMenu";
 import logo from "@/public/images/logo.png";
-import signOut from "@/public/images/sign-out.svg";
+import signOutIcon from "@/public/images/sign-out.svg";
+import { useSignOut } from "react-firebase-hooks/auth";
 
 type Props = {
   children: ReactNode;
 };
 
 export default function AppLayout({ children }: Props) {
+  // TODO: Handle loading and error signout states
+  const [signOut, loading, error] = useSignOut(auth);
   const router = useRouter();
   const { pathname } = router;
   // Extract the text after the last `/`
@@ -35,8 +38,8 @@ export default function AppLayout({ children }: Props) {
             </li>
           </ul>
         </nav>
-        <button className={styles.signOut} onClick={() => auth.signOut()}>
-          <Image src={signOut} alt="Log out icon" /> Log Out
+        <button className={styles.signOut} onClick={signOut}>
+          <Image src={signOutIcon} alt="Log out icon" /> Log Out
         </button>
         <BurgerMenu />
       </header>

@@ -1,21 +1,23 @@
-import React, { useEffect, ComponentType } from 'react';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import React, { useEffect, ComponentType, useContext } from 'react';
 import { useRouter } from 'next/router';
-import { auth } from "@/lib/firebase";
+import { AuthContext } from '@/context/AuthContext';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
 
 // Redirect to login page if user is not authenticated
 function withAuth<P extends {}>(
   WrappedComponent: ComponentType<P>
 ) {
   function WithAuthComponent(props: P): JSX.Element {
-    const [user] = useAuthState(auth);
+    const {user, loading} = useContext(AuthContext);
     const router = useRouter();
 
     useEffect(() => {
-      if (!user) router.push('/'); 
-    }, [user, router]);
+      if (!user && !loading) router.push('/'); 
+    }, [user, router, loading]);
 
-    return <WrappedComponent {...props} />;
+    if (loading) return <LoadingSpinner/>;
+
+    return <WrappedComponent {...props}/>;
   }
 
   return WithAuthComponent;
