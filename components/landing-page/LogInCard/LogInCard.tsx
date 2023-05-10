@@ -1,43 +1,50 @@
 import React from "react";
 import Image from "next/image";
-import { useFormik } from "formik";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { yupResolver } from "@hookform/resolvers/yup";
 import styles from "@/styles/components/SignInCard.module.scss";
-import { SignInDemoUser, signInWithGoogle, auth } from "@/lib/firebase";
+import { auth, getErrorMessage } from "@/lib/firebase";
 import { SignInCardProps } from "@/lib/types";
 import googleIcon from "@/public/images/google-icon.svg";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+} from "react-firebase-hooks/auth";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+
+const schema = Yup.object({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is Required"),
+  password: Yup.string().required("Password is Required"),
+});
+type FormData = Yup.InferType<typeof schema>;
 
 export default function LogInCard({ setComponentToShow }: SignInCardProps) {
-  const [error, setError] = React.useState<string | null>(null);
-  const [message, setMessage] = React.useState<string | null>(null);
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is Required"),
-      password: Yup.string().required("Password is Required"),
-    }),
-    onSubmit: (values) => {
-      logIn(values.email, values.password);
-    },
+  const [
+    signInWithEmailAndPassword,
+    emailPasswordUser,
+    emailPasswordLoading,
+    emailPasswordError,
+  ] = useSignInWithEmailAndPassword(auth);
+  const [signInWithGoogle, googleUser, googleLoading, googleError] =
+    useSignInWithGoogle(auth);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
   });
 
-  async function logIn(email: string, password: string) {
-    setError(null);
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setMessage("Logged in successfully");
-    } catch (e: any) {
-      if (e.code === "auth/wrong-password") setError("Incorrect password");
-      if (e.code === "auth/invalid-email") setError("Incorrect email");
-      if (e.code === "auth/user-not-found") setError("User not found");
-    }
-  }
+  // displaying loading even if user has logged in becasue he will be
+  // redirected to the dashboard
+  if (emailPasswordLoading || googleLoading || googleUser || emailPasswordUser)
+    return <LoadingSpinner />;
+
+  const logIn = (values: FormData) =>
+    signInWithEmailAndPassword(values.email, values.password);
 
   return (
     <div className={styles.signInCard}>
@@ -48,40 +55,26 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
           <span>Sign In with Google</span>
         </div>
       </button>
+      <p className={styles.error}>{getErrorMessage(googleError?.code)}</p>
       <div className={styles.divider}>
         <hr />
         <span>or</span>
       </div>
-      <form noValidate onSubmit={formik.handleSubmit} className={styles.form}>
+      <p className={styles.error}>
+        {getErrorMessage(emailPasswordError?.code)}
+      </p>
+      <form onSubmit={handleSubmit(logIn)} className={styles.form}>
         <div className={styles.inputDiv}>
-          {error && <p className={styles.error}>{error}</p>}
-          {message && <p className={styles.success}>{message}</p>}
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.errors.email && formik.touched.email ? (
-            <p className={styles.error}>{formik.errors.email}</p>
-          ) : null}
+          <p className={styles.error}>{errors.email?.message}</p>
+          <input {...register("email")} placeholder="Email" />
         </div>
         <div className={styles.inputDiv}>
+          <p className={styles.error}>{errors.password?.message}</p>
           <input
-            id="password"
-            name="password"
-            type="password"
+            {...register("password")}
             placeholder="Password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
+            type="password"
           />
-          {formik.errors.password && formik.touched.password ? (
-            <p className={styles.error}>{formik.errors.password}</p>
-          ) : null}
         </div>
         <button
           onClick={() => setComponentToShow("resetpassword")}
@@ -106,7 +99,9 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
       </form>
 
       <button
-        onClick={SignInDemoUser}
+        onClick={() =>
+          signInWithEmailAndPassword("demouser@demo.com", "demouser123")
+        }
         className={`${styles.btn} ${styles.demoBtn}`}
       >
         <div>Demo</div>

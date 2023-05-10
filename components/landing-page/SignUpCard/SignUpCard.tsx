@@ -1,94 +1,68 @@
 import React from "react";
 import * as Yup from "yup";
-import { useFormik } from "formik";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 import styles from "@/styles/components/SignInCard.module.scss";
-import { auth } from "@/lib/firebase";
+import { auth, getErrorMessage } from "@/lib/firebase";
 import { SignInCardProps } from "@/lib/types";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+
+const schema = Yup.object({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is Required"),
+  password: Yup.string()
+    .required("Password is Required")
+    .min(8, "Password must be at least 8 characters long"),
+  secondPassword: Yup.string()
+    .required("Confirm Password is Required")
+    .oneOf([Yup.ref("password")], "Passwords must match"),
+});
+type FormData = Yup.InferType<typeof schema>;
 
 export default function SignUpCard({ setComponentToShow }: SignInCardProps) {
-  const [error, setError] = React.useState<string | null>(null);
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-      secondPassword: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is Required"),
-      password: Yup.string()
-        .required("Password is Required")
-        .min(8, "Password must be at least 8 characters long"),
-      secondPassword: Yup.string()
-        .required("Confirm Password is Required")
-        .oneOf([Yup.ref("password")], "Passwords must match"),
-    }),
-    onSubmit: (values) => {
-      signUp(values.email, values.password);
-    },
+  const [createUserWithEmailAndPassword, user, loading, error] =
+    useCreateUserWithEmailAndPassword(auth);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
   });
 
-  async function signUp(email: string, password: string) {
-    setError(null);
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setComponentToShow("login");
-    } catch (e: any) {
-      if (e.code === "auth/email-already-in-use")
-        setError("Email already in use");
-      if (e.code === "auth/invalid-email") setError("Invalid email");
-      if (e.code === "auth/weak-password") setError("Weak password");
-    }
-  }
+  const signUp = (values: FormData) =>
+    createUserWithEmailAndPassword(values.email, values.password);
+
+  // displaying loading even if user has logged in becasue he will be
+  // redirected to the dashboard
+  if (loading || user) return <LoadingSpinner />;
 
   return (
     <div className={styles.signInCard}>
       <p className={styles.title}>Sign Up</p>
-      <form noValidate onSubmit={formik.handleSubmit} className={styles.form}>
+      <p className={styles.error}>{getErrorMessage(error?.code)}</p>
+      <form onSubmit={handleSubmit(signUp)} className={styles.form}>
         <div className={styles.inputDiv}>
-          {error && <p className={styles.error}>{error}</p>}
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.errors.email && formik.touched.email ? (
-            <p className={styles.error}>{formik.errors.email}</p>
-          ) : null}
+          <p className={styles.error}>{errors.email?.message}</p>
+          <input {...register("email")} placeholder="Email" />
         </div>
         <div className={styles.inputDiv}>
+          <p className={styles.error}>{errors.password?.message}</p>
           <input
-            id="password"
-            name="password"
+            {...register("password")}
             type="password"
             placeholder="Password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
           />
-          {formik.errors.password && formik.touched.password ? (
-            <p className={styles.error}>{formik.errors.password}</p>
-          ) : null}
         </div>
         <div className={`${styles.inputDiv} ${styles.secondPassword}`}>
+          <p className={styles.error}>{errors.secondPassword?.message}</p>
           <input
-            id="secondPassword"
-            name="secondPassword"
+            {...register("secondPassword")}
             type="password"
             placeholder="Confirm Password"
-            value={formik.values.secondPassword}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
           />
-          {formik.errors.secondPassword && formik.touched.secondPassword ? (
-            <p className={styles.error}>{formik.errors.secondPassword}</p>
-          ) : null}
         </div>
         <button type="submit" className={`${styles.btn} ${styles.submitBtn}`}>
           <div>Sign Up</div>

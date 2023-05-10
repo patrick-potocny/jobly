@@ -1,38 +1,59 @@
-import React from "react";
-import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import * as Yup from "yup";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
+import { yupResolver } from "@hookform/resolvers/yup";
 import styles from "@/styles/components/SignInCard.module.scss";
-import { auth } from "@/lib/firebase";
+import { auth, getErrorMessage } from "@/lib/firebase";
 import { SignInCardProps } from "@/lib/types";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { FirebaseError } from "firebase/app";
 
-export default function ResetPasswordCard({ setComponentToShow }: SignInCardProps) {
-  const [error, setError] = React.useState<string | null>(null);
-  const [message, setMessage] = React.useState<string | null>(null);
-  const formik = useFormik({
-    initialValues: {
-      email: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is Required"),
-    }),
-    onSubmit: (values) => {
-      resetPassword(values.email);
-    },
+const schema = Yup.object({
+  email: Yup.string()
+    .email("Invalid email address")
+    .required("Email is Required"),
+});
+type FormData = Yup.InferType<typeof schema>;
+
+export default function ResetPasswordCard({
+  setComponentToShow,
+}: SignInCardProps) {
+  const [message, setMessage] = useState<string | null>(null);
+  const [sendPasswordResetEmail, sending, resetError] =
+    useSendPasswordResetEmail(auth);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm<FormData>({
+    resolver: yupResolver(schema),
   });
 
-  async function resetPassword(email: string) {
-    setError(null);
-    try {
-      await sendPasswordResetEmail(auth, email);
-      setMessage("Email has been sent");
-    } catch (e: any) {
-      if (e.code === "auth/invalid-email") setError("Invalid email");
-      if (e.code === "auth/user-not-found") setError("User not found");
+  useEffect(() => {
+    // checking if resetError is an instance of FirebaseError because
+    // it can be normal Error and that doesnt have code property
+    // we can translate to a message
+    if (resetError instanceof FirebaseError) {
+      setError("email", {
+        type: "custom",
+        message: getErrorMessage(resetError.code),
+      });
+    } else if (resetError) {
+      setError("email", {
+        type: "custom",
+        message: "Something went wrong. Please try again.",
+      });
     }
-  }
+  }, [setError, resetError]);
+
+  const resetPassword = async (values: FormData) => {
+    await sendPasswordResetEmail(values.email);
+    setMessage("Email has been sent.");
+  };
+
+  if (sending) return <LoadingSpinner />;
 
   return (
     <div className={styles.signInCard}>
@@ -41,22 +62,11 @@ export default function ResetPasswordCard({ setComponentToShow }: SignInCardProp
         Enter the email assiociated with your account and we&apos;ll send you
         instructions to reset your password.
       </p>
-      <form noValidate onSubmit={formik.handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit(resetPassword)} className={styles.form}>
         <div className={styles.inputDiv}>
-          {error && <p className={styles.error}>{error}</p>}
-          {message && <p className={styles.success}>{message}</p>}
-          <input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-          />
-          {formik.errors.email && formik.touched.email ? (
-            <p className={styles.error}>{formik.errors.email}</p>
-          ) : null}
+          <p className={styles.success}>{!resetError && message}</p>
+          <p className={styles.error}>{errors.email?.message}</p>
+          <input {...register("email")} placeholder="Email" />
         </div>
         <button type="submit" className={`${styles.btn} ${styles.submitBtn}`}>
           <div>Send reset Email</div>

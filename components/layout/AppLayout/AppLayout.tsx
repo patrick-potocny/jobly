@@ -14,8 +14,7 @@ type Props = {
 };
 
 export default function AppLayout({ children }: Props) {
-  // TODO: Handle loading and error signout states
-  const [signOut, loading, error] = useSignOut(auth);
+  const [signOut] = useSignOut(auth);
   const router = useRouter();
   const { pathname } = router;
   // Extract the text after the last `/`

@@ -20,24 +20,26 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Google Sign In
-const googleProvider = new GoogleAuthProvider();
-async function signInWithGoogle() {
-  try {
-    const res = await signInWithRedirect(auth, googleProvider);
-  } catch (e) {
-    alert('Error signing in with Google \n Please try again');
-  }
+type ErrorMessages = {
+  [key: string]: string;
 };
 
-// Demo user Sign In
-async function SignInDemoUser() {
-  try {
-    await signInWithEmailAndPassword(auth, "demouser@demo.com", "demouser123");
-  } catch (e) {
-    alert('Error signing in with Demo User \n Please try again');
-  }
-}
+const errorMessages: ErrorMessages = {
+  'auth/user-disabled': 'Your account has been disabled.',
+  'auth/user-not-found': 'User not found. Please check your email and try again.',
+  'auth/wrong-password': 'Incorrect password. Please try again.',
+  "auth/weak-password": 'Your password is too weak. Please use stronger one.',
+  "auth/email-already-in-use": 'The email address is already in use by another account.',
+  'auth/network-request-failed': 'A network error occurred. Please try again later.',
+  "auth/popup-closed-by-user": 'Popup has been closed by the user. Please try again.',
+  "auth/popup-blocked": 'Popup has been blocked by the browser. Please try again.',
+  // Add more error codes and messages as needed
+};
+
+function getErrorMessage(errorCode: string | undefined) {
+  if (errorCode) return errorCode in errorMessages ? errorMessages[errorCode] : 'An error occurred. Please try again later.';
+};
+
 
 // Save job to db
 async function saveJob(jobData: JobType | DocumentData, jobId: string | undefined, userEmail: string | undefined | null) {
@@ -96,4 +98,4 @@ async function delNote(noteID: string, userEmail: string | undefined | null) {
   }
 }
 
-export { auth, db, signInWithGoogle, SignInDemoUser, saveJob, delJob, saveNote, delNote };
+export { auth, db, saveJob, delJob, saveNote, delNote, getErrorMessage };
