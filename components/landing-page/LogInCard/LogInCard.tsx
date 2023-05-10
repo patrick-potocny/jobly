@@ -84,7 +84,7 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
           Forgot password?
         </button>
         <button type="submit" className={`${styles.btn} ${styles.submitBtn}`}>
-          <div>Log In</div>
+          <div className={styles.btnText}>Log In</div>
         </button>
         <p>
           Dont have an account?{" "}
