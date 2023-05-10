@@ -3,8 +3,6 @@
 .signInCard {
   padding: 1em 2em 2em;
   border-radius: 2em;
-  max-width: 28em;
-  min-width: 25em;
   width: 28em;
   max-height: 45em;
   background-color: $clr-white;
@@ -12,14 +10,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .5em;
+  gap: 0.5em;
 
   .title {
     font-size: 2em;
     font-weight: 600;
   }
 
-  .resetInstructions {
+  .instructions {
     text-align: center;
     font-size: 1.2em;
     font-weight: 500;
@@ -32,7 +30,6 @@
     margin-block: 1.5em;
 
     hr {
-      width: 100%;
       border: 1px solid rgba($clr-text, 0.2);
     }
 
@@ -76,33 +73,24 @@
         font-size: 1.2em;
         color: $clr-text;
       }
-
     }
-    
-    .forgotPassword {
+
+    .link {
       color: $clr-text;
-      text-decoration: underline;
       font-weight: 600;
-      margin-left: auto;
+      text-decoration: underline;
 
       &:hover {
         cursor: pointer;
       }
+    }
+    .forgotPassword {
+      margin-left: auto;
     }
 
     .submitBtn {
       background-color: $clr-bg-100;
       border: none;
-    }
-
-    .signUp {
-      color: $clr-text;
-      font-weight: 600;
-      text-decoration: underline;
-
-      &:hover {
-        cursor: pointer;
-      }
     }
 
     .secondPassword {
@@ -121,7 +109,7 @@
     color: $clr-text;
     display: flex;
 
-    div {
+    .btnText {
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -139,7 +127,7 @@
     border: 2px solid $clr-demo-btn;
     padding-block: 0.7em;
 
-    div {
+    .btnText {
       font-size: 1.1em;
       color: $clr-demo-btn;
     }

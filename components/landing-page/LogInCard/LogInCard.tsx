@@ -48,11 +48,11 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
 
   return (
     <div className={styles.signInCard}>
-      <p className={styles.title}>Log In</p>
+      <h2 className={styles.title}>Log In</h2>
       <button className={styles.btn} onClick={() => signInWithGoogle()}>
-        <div>
+        <div className={styles.btnText}>
           <Image src={googleIcon} alt="google icon" />
-          <span>Sign In with Google</span>
+          <span>Log In with Google</span>
         </div>
       </button>
       <p className={styles.error}>{getErrorMessage(googleError?.code)}</p>
@@ -79,7 +79,7 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
         <button
           onClick={() => setComponentToShow("resetpassword")}
           type="button"
-          className={styles.forgotPassword}
+          className={`${styles.link} ${styles.forgotPassword}`}
         >
           Forgot password?
         </button>
@@ -91,7 +91,7 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
           <button
             onClick={() => setComponentToShow("signup")}
             type="button"
-            className={styles.signUp}
+            className={styles.link}
           >
             Sign Up
           </button>
@@ -104,7 +104,7 @@ export default function LogInCard({ setComponentToShow }: SignInCardProps) {
         }
         className={`${styles.btn} ${styles.demoBtn}`}
       >
-        <div>Demo</div>
+        <div className={styles.btnText}>Demo</div>
       </button>
     </div>
   );

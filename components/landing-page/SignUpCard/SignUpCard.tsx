@@ -41,7 +41,7 @@ export default function SignUpCard({ setComponentToShow }: SignInCardProps) {
 
   return (
     <div className={styles.signInCard}>
-      <p className={styles.title}>Sign Up</p>
+      <h2 className={styles.title}>Sign Up</h2>
       <p className={styles.error}>{getErrorMessage(error?.code)}</p>
       <form onSubmit={handleSubmit(signUp)} className={styles.form}>
         <div className={styles.inputDiv}>
@@ -65,14 +65,14 @@ export default function SignUpCard({ setComponentToShow }: SignInCardProps) {
           />
         </div>
         <button type="submit" className={`${styles.btn} ${styles.submitBtn}`}>
-          <div>Sign Up</div>
+          <div className={styles.btnText}>Sign Up</div>
         </button>
         <p>
           Already have an account?{" "}
           <button
             onClick={() => setComponentToShow("login")}
             type="button"
-            className={styles.signUp}
+            className={styles.link}
           >
             Log In
           </button>

@@ -57,8 +57,8 @@ export default function ResetPasswordCard({
 
   return (
     <div className={styles.signInCard}>
-      <p className={styles.title}>Reset Password</p>
-      <p className={styles.resetInstructions}>
+      <h2 className={styles.title}>Reset Password</h2>
+      <p className={styles.instructions}>
         Enter the email assiociated with your account and we&apos;ll send you
         instructions to reset your password.
       </p>
@@ -69,13 +69,13 @@ export default function ResetPasswordCard({
           <input {...register("email")} placeholder="Email" />
         </div>
         <button type="submit" className={`${styles.btn} ${styles.submitBtn}`}>
-          <div>Send reset Email</div>
+          <div className={styles.btnText}>Send reset Email</div>
         </button>
         <p>
           <button
             onClick={() => setComponentToShow("login")}
             type="button"
-            className={styles.signUp}
+            className={styles.link}
           >
             Back to Log In
           </button>
