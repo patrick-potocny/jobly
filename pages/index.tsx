@@ -8,11 +8,12 @@ import AboutApp from "@/components/landing-page/AboutApp";
 import { Dosis } from "@next/font/google";
 import logo from "@/public/images/logo.png";
 import { AuthContext } from "@/context/AuthContext";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 const dosis = Dosis({ subsets: ["latin"], display: "swap" });
 
 export default function LandingPage() {
-  const {user} = useContext(AuthContext)
+  const { user, loading } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
@@ -20,28 +21,17 @@ export default function LandingPage() {
   }, [user, router]);
 
   return (
-    <div className={dosis.className}>
-      <div className={styles.container}>
-        <Image className={styles.logo} src={logo} alt="Jobly Logo" priority />
-        <main className={styles.main}>
-          <div className={styles.aboutAppDiv}>
-            <AboutApp />
-          </div>
-          <motion.div
-            className={styles.signInDiv}
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              delay: 1.6,
-              duration: 1,
-              type: "spring",
-              stiffness: 50,
-            }}
-          >
-            <SignInCards />
-          </motion.div>
-        </main>
-      </div>
+    <div className={`${styles.container} ${dosis.className}`}>
+      <Image className={styles.logo} src={logo} alt="Jobly Logo" priority />
+      <main className={styles.main}>
+        {loading || user ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <AboutApp /> <SignInCards />
+          </>
+        )}
+      </main>
     </div>
   );
 }

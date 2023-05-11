@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
+import styles from "./SignInCards.module.scss";
 import SignUpCard from "../SignUpCard";
 import LogInCard from "../LogInCard";
 import ResetPasswordCard from "../ResetPasswordCard";
@@ -9,7 +10,17 @@ export default function SignInCards() {
   const [componentToShow, setComponentToShow] = useState("login");
 
   return (
-    <>
+    <motion.div
+      className={styles.signInCards}
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        delay: 1.6,
+        duration: 1,
+        type: "spring",
+        stiffness: 50,
+      }}
+    >
       <AnimatePresence initial={false} mode="popLayout">
         {componentToShow === "login" && (
           <motion.div
@@ -42,6 +53,6 @@ export default function SignInCards() {
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </motion.div>
   );
 }
